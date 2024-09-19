@@ -2,7 +2,7 @@
   "name": "src",
   "version": "1.0.0",
   "description": "",
-  "main": "server.js",
+  "main": "devServer.js",
   "scripts": {
     "test": "cd publicSrc && echo Building JS && webpack --mode development && echo Launching Server && cd .. && start http://localhost:3000/app && node .",
     "start": "node server.js",
