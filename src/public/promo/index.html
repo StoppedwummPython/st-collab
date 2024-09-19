@@ -17,7 +17,7 @@
     <script>
         if (query["code"] && promoCodes.includes(query["code"])) {
             console.log("Code existing and valid")
-            const promo = fetch("promos/" + query["code"] + ".html")
+            const promo = fetch("/promo/promos/" + query["code"] + ".html")
             promo.then((res) => {
                 res.text().then((html) => {
                     document.body.innerHTML = html
