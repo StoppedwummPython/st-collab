@@ -1,0 +1,23 @@
+{
+  "name": "publicsrc",
+  "version": "1.0.0",
+  "description": "",
+  "main": "ably.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@aws-sdk/client-s3": "^3.645.0",
+    "ably": "^2.3.1",
+    "js-cookie": "^3.0.5",
+    "node-emoji": "^2.1.3",
+    "uuid": "^10.0.0"
+  },
+  "devDependencies": {
+    "webpack": "latest",
+    "webpack-cli": "latest"
+  }
+}

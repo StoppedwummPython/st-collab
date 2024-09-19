@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <style>
+        body {
+            background-color: black;
+            color: white;
+            font-family: Arial, Helvetica, sans-serif;
+        }
+    </style>
+</head>
+
+<body>
+    <script src="/js/query.js"></script>
+    <script src="/js/promo.js"></script>
+    <script>
+        if (query["code"] && promoCodes.includes(query["code"])) {
+            console.log("Code existing and valid")
+            const promo = fetch("promos/" + query["code"] + ".html")
+            promo.then((res) => {
+                res.text().then((html) => {
+                    document.body.innerHTML = html
+                })
+            })
+        } else {
+            document.body.innerHTML = "<h1>Invalid promo code</h1>"
+        }
+    </script>
+</body>
+
+</html>

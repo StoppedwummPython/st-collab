@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>After Login</title>
+</head>
+
+<body>
+    <script src="/js/query.js"></script>
+    <script>
+        if (query["code"]) {
+            async function main() {
+                const a = await fetch("https://st-collab-oauth.vercel.app/app/api/check?code=" + query["code"])
+                if (a.ok) {
+                    const userInfo = await a.json()
+                    console.log(userInfo)
+                    localStorage.setItem("userInfo", JSON.stringify(userInfo))
+                    document.location.href = "/app/chat"
+                } else {
+                    window.location.href = "https://st-collab-oauth.vercel.app/app/login"
+                }
+            }
+            main()
+        } else {
+            window.location.href = "https://st-collab-oauth.vercel.app/app/login"
+        }
+    </script>
+</body>
+
+</html>
