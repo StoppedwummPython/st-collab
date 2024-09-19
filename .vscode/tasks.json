@@ -1,0 +1,51 @@
+{
+	"version": "2.0.0",
+	"tasks": [
+		{
+			"type": "npm",
+			"script": "test",
+			"path": "src",
+			"group": "build",
+			"problemMatcher": [],
+			"label": "npm: test - src",
+			"detail": "cd publicSrc && echo Building JS && webpack --mode development && echo Launching Server && cd .. && start http://localhost:3000/app && node ."
+		},
+		{
+			"type": "npm",
+			"script": "buildProd",
+			"path": "src",
+			"group": {
+				"kind": "build",
+				"isDefault": true
+			},
+			"problemMatcher": [],
+			"label": "npm: buildProd - src",
+			"detail": "cd publicSrc && echo Building JS && webpack"
+		},
+		{
+			"type": "npm",
+			"script": "buildDev",
+			"path": "src",
+			"group": "build",
+			"problemMatcher": [],
+			"label": "npm: buildDev - src",
+			"detail": "cd publicSrc && echo Building JS && webpack --mode development"
+		},
+		{
+			"type": "npm",
+			"script": "start",
+			"path": "src",
+			"problemMatcher": [],
+			"label": "npm: start - src",
+			"detail": "node server.js"
+		},
+		{
+			"type": "npm",
+			"script": "publish",
+			"path": "src",
+			"problemMatcher": [],
+			"label": "npm: publish - src",
+			"detail": "Publish to vercel"
+		},
+	]
+}
