@@ -11,13 +11,13 @@ module.exports = () => {
     fileInput.type = 'file';
     fileInput.accept = 'image/*';  // Only allow image
 
-    const uploadManager = new Bytescale.UploadManager({
+    const uploadManager = new bytescale.UploadManager({
       apiKey: "public_kW15cEC3sfYLFmDQCZcpvDWdes81" // This is your API key.
     })
 
     const onFileSelected = async event => {
       const file = event.target.files[0];
-
+      file.name = `${uuid.v4()}.${file.name}`
       try {
         const { fileUrl, filePath } = await uploadManager.upload({ data: file });
         resolve(fileUrl)
