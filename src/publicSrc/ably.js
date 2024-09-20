@@ -25,7 +25,7 @@ async function ablyMain() {
   if (localStorage.getItem("joinCode") == undefined || localStorage.getItem("username") == undefined) {
     document.location.href = "/app/"
   }
-  const sysM = ["Eine native Windows App ist nun verfügbar. Klicke <a href='https://www.mediafire.com/file/o1evkgljhmnu5ak/st-collab-native+Setup+1.0.0.exe/file'>hier</a> um sie herunterzuladen.", "Entwicklung der App wird langsam heruntergefahren. Heißt aber nicht, dass ich aufhöre"]
+  const sysM = ["Eine native Windows App ist nun verfügbar. Klicke <a href='https://www.mediafire.com/file/o1evkgljhmnu5ak/st-collab-native+Setup+1.0.0.exe/file'>hier</a> um sie herunterzuladen.", "btw opensource <a href='https://github.com/StoppedwummPython/st-collab'>github</a>"]
   const Ably = require('ably');
   const upload = require("./upload")
   const badge = require("./badge")
