@@ -29,7 +29,7 @@
 
 <body>
     <div class="box">
-        <h1>Create/Join Room</h1><br>
+        <video src="/st-collab.my.canva.site/videos/4f17b8ec86c4ccd7ddf057b3282cc879.mp4" playsinline="" muted="" loop="" class="vidlogo" width="50px"></video><h1>Create/Join Room</h1><video src="/st-collab.my.canva.site/videos/4f17b8ec86c4ccd7ddf057b3282cc879.mp4" playsinline="" muted="" loop="" class="vidlogo" width="50px"></video><br>
     </div><br><br>
     <div class="box2">
         <form>
@@ -56,6 +56,10 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 */
+
+    Array.from(document.getElementsByClassName("vidlogo")).forEach((val) => {
+        val.play()
+    })
     const join = document.getElementById("join")
     const recommended = document.getElementById("recommended")
     join.addEventListener("click", async () => {
