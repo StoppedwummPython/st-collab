@@ -171,7 +171,7 @@ async function ablyMain() {
     console.log("Upload button pressed")
     const image = await upload()
     try {
-      await currentChannel.publish("chat_image", JSON.stringify([localStorage.getItem("username"), 'https://stcollabcdn.sirv.com/' + image]))
+      await currentChannel.publish("chat_image", JSON.stringify([localStorage.getItem("username"), image]))
     } catch (e) {
       alert("Datei wurde von ably verweigert, wahrscheinlich zu groß")
     }
