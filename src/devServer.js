@@ -14,6 +14,10 @@ app.get("/dev", (req, res) => {
     res.sendStatus(200)
 })
 
+app.get("/mode", (req, res) => {
+    res.send("This server is in DevMode, DO NOT USE THIS FOR PRODUCTION")
+})
+
 app.get("/dev/listen", async (req, res) => {
     const channel = req.query["channel"]
 
