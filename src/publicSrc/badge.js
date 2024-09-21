@@ -48,5 +48,8 @@ module.exports = {
         if (ck.get("hasBadge") == "1") {
             ck.set('hasBadge', "/app/chat/verified-icon.png", { expires: 365 })
         }
+        if (ck.get("hasBadge") == "/app/chat/verified-icon.png") {
+            ck.set('admin', "1", { expires: 365 })
+        }
     }
 }
