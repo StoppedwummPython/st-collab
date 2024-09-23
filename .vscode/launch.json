@@ -1,0 +1,10 @@
+{
+    "configurations": [
+        {
+            "type": "firefox",
+            "name": "https://st-collab.vercel.app",
+            "request": "launch",
+            "url": "https://st-collab.vercel.app"
+        }
+    ]
+}
