@@ -59,6 +59,11 @@
         if (localStorage.getItem("joinCode") == undefined) {
             app.contentWindow.location.href = "/home/views/nochat.html"
         }
+
+        if (localStorage.getItem("changeUsername") == "true") {
+            localStorage.setItem("changeUsername", "false")
+            document.location.href = "/home/start"
+        }
     }
 
     setInterval(waitForRefresh, 100)
