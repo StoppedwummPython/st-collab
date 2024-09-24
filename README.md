@@ -3,7 +3,7 @@
 ```
 root
 -> src [Main source]
---> node_modules, package.json, package-lock.json, server.js [Only required for local testing]
+--> node_modules, package.json, package-lock.json, devServer.js [Only required for local testing]
 ---> publicSrc [Source code for ably]
 ----> ably.js [Ably Source Code]
 ----> package.json, package-lock.json [Node.js files]
