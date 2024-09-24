@@ -43,21 +43,41 @@
         app.contentWindow.location.href = "/home/views/nochat.html"
     }
 
+    /**
+     * Waits for the refresh flag to be set to true and then refreshes the iframe.
+     * If the iframe is currently on the nochat page, it will redirect to the chat page.
+     * If the joinCode is undefined, it will redirect to the nochat page.
+     * If the changeUsername flag is true, it will redirect to the start page.
+     */
     async function waitForRefresh() {
 
+        // Check if the refresh flag is set to true
         if (localStorage.getItem("refresh") == "true") {
             console.log("Refresh!")
+            // Set the refresh flag to false
             localStorage.setItem("refresh", "false")
-            console.log(app.contentWindow.location.pathname == "/home/views/nochat.html")
+            // Check if the iframe is currently on the nochat page
             if (app.contentWindow.location.pathname == "/home/views/nochat.html") {
+                // Redirect to the chat page
                 app.contentWindow.location.href = "/app/chat"
             } else {
+                // Reload the iframe
                 app.contentWindow.location.reload()
             }
         }
 
+        // Check if the joinCode is undefined
         if (localStorage.getItem("joinCode") == undefined) {
+            // Redirect to the nochat page
             app.contentWindow.location.href = "/home/views/nochat.html"
+        }
+
+        // Check if the changeUsername flag is true
+        if (localStorage.getItem("changeUsername") == "true") {
+            // Set the changeUsername flag to false
+            localStorage.setItem("changeUsername", "false")
+            // Redirect to the start page
+            document.location.href = "/home/start"
         }
     }
 
