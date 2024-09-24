@@ -12,6 +12,9 @@
         button {
             width: 100%;
             z-index: 1000000;
+            border-radius: 0px;
+            background-color: black;
+            color: white;
         }
 
         iframe {
@@ -25,7 +28,7 @@
     <div id="navbar">
 
     </div>
-    <script src=" https://cdn.jsdelivr.net/npm/js-cookie@3.0.5/dist/js.cookie.min.js "></script>
+    <script src="https://cdn.jsdelivr.net/npm/js-cookie@3.0.5/dist/js.cookie.min.js "></script>
     <script>
         const navbar = document.getElementById("navbar")
 
@@ -45,28 +48,39 @@
             return item
         }
 
-        let chats = JSON.stringify(Cookies.get("chats"))
+        let chats = JSON.parse(Cookies.get("chats"))
         console.log(Cookies.get("chats"), Cookies)
 
         if (chats == undefined) {
             Cookies.set("chats", "[]")
-            chats = JSON.stringify(Cookies.get("chats"))
+            chats = JSON.parse(Cookies.get("chats"))
         }
-
-        for (const val in chats) {
-            const button = CreateButton(val)
+        let buttons = []
+        for (const element of chats) {
+            const button = CreateButton(element)
+            buttons.push(button)
+            if (localStorage.getItem("joinCode") == element) {
+                button.style.backgroundColor = "red"
+            }
             button.addEventListener("click", () => {
-                localStorage.setItem("joinCode", val)
+                for (const bt of buttons) {
+                    bt.style.backgroundColor = "black"
+                }
+                button.style.backgroundColor = "red"
+                localStorage.setItem("joinCode", element)
                 localStorage.setItem("refresh", "true")
-
             })
         }
         document.getElementById("addChat").addEventListener("click", () => {
             const room = prompt("Join code")
+            console.log("Prompt:", room)
             if (room) {
-                alert("Kein Room Code gegeben")
+                console.log(chats)
+                const c = chats.push(room)
+                Cookies.set("chats", JSON.stringify(chats))
+                document.location.reload()
             } else {
-                localStorage.setItem("joinCode", room)
+                alert("Kein Room Code gegeben")
             }
         })
     </script>

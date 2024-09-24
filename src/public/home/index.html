@@ -2,7 +2,7 @@
 <html>
 
 <head>
-    <title>Start with ST-Collab</title>
+    <title>ST-Collab Home</title>
     <style>
         body {
             background-color: black;
@@ -19,6 +19,7 @@
             height: 100%;
             position: fixed;
             padding-left: 0;
+            z-index: 10000
         }
         button {
             width: 100%;
@@ -38,16 +39,26 @@
     const navbar = document.getElementById("navbar")
     const app = document.getElementById("app")
 
+    if (localStorage.getItem("joinCode") == undefined) {
+        app.contentWindow.location.href = "/home/views/nochat.html"
+    }
+
     async function waitForRefresh() {
 
         if (localStorage.getItem("refresh") == "true") {
+            console.log("Refresh!")
             localStorage.setItem("refresh", "false")
-            app.contentWindow.location.reload()
+            console.log(app.contentWindow.location.pathname == "/home/views/nochat.html")
+            if (app.contentWindow.location.pathname == "/home/views/nochat.html") {
+                app.contentWindow.location.href = "/app/chat"
+            } else {
+                app.contentWindow.location.reload()
+            }
         }
 
     }
 
-    setTimeout(waitForRefresh, 100)
+    setInterval(waitForRefresh, 100)
 </script>
 
 </html>
