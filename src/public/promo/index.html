@@ -17,15 +17,23 @@
     <script src="/js/query.js"></script>
     <script src="/js/promo.js"></script>
     <script>
+        /**
+         * Check if the promo code is valid and if it is, display the promo
+         * @param {String} code The promo code
+         */
         if (query["code"] && promoCodes.includes(query["code"])) {
+            // The promo code is valid, so display the promo
             console.log("Code existing and valid")
             const promo = fetch("/promo/promos/" + query["code"] + ".html")
             promo.then((res) => {
+                // Get the HTML of the promo
                 res.text().then((html) => {
+                    // Set the body's innerHTML to the promo HTML
                     document.body.innerHTML = html
                 })
             })
         } else {
+            // The promo code is not valid, so display an error message
             document.body.innerHTML = "<h1>Invalid promo code</h1>"
         }
     </script>
