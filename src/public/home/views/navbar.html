@@ -25,7 +25,7 @@
 
 <body>
     <button id="addChat">Add chat</button>
-    <button id="addChat">Change Username</button>
+    <button id="changeUsername">Change Username</button>
     <div id="navbar">
 
     </div>
@@ -87,6 +87,9 @@
             } else {
                 alert("Kein Room Code gegeben")
             }
+        })
+        document.getElementById("changeUsername").addEventListener("click", () => {
+            document.location.href = "/home/start"
         })
     </script>
 </body>
