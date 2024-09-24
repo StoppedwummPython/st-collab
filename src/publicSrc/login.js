@@ -4,11 +4,11 @@ module.exports = async () => {
         console.log("USER INFO FOUND!")
         document.getElementById("login").remove()
         const userInfo = JSON.parse(lcstg)
-        console.log(userInfo)
-        alert("Logged in as " + userInfo.nickname)
+        return userInfo
     } else {
         document.getElementById("login").addEventListener("click", () => {
             document.location.href = "https://st-collab-oauth.vercel.app/app/login"
         })
+        return undefined
     }
 }

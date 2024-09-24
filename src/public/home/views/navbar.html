@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <style>
+        body {
+            background-color: black;
+            color: white;
+            font-family: Arial, Helvetica, sans-serif;
+        }
+
+        button {
+            width: 100%;
+            z-index: 1000000;
+            border-radius: 0px;
+            background-color: black;
+            color: white;
+        }
+
+        iframe {
+            z-index: 9999;
+        }
+    </style>
+</head>
+
+<body>
+    <button id="addChat">Add chat</button>
+    <button id="changeUsername">Change Username</button>
+    <div id="navbar">
+
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/js-cookie@3.0.5/dist/js.cookie.min.js "></script>
+    <script>
+        const navbar = document.getElementById("navbar")
+
+        /**
+         * Creates a button in the navbar
+         * @param {string} text the text of the button
+         * @returns {HTMLElement} the created button
+         */
+        function CreateButton(text) {
+            // create a new button element
+            const item = document.createElement("button")
+            // set the text of the button
+            item.textContent = text
+            // add the button to the navbar
+            navbar.appendChild(item)
+            // return the created button
+            return item
+        }
+
+        if (Cookies.get("chats") == undefined) {
+            Cookies.set("chats", "[]", { expires: 365 })
+        }
+
+        let chats = JSON.parse(Cookies.get("chats"))
+        if (chats.length == 0) {
+            localStorage.removeItem("joinCode")
+            localStorage.setItem("refresh", "true")
+        }
+        console.log(Cookies.get("chats"), Cookies)
+
+        let buttons = []
+        for (const element of chats) {
+            const button = CreateButton(element)
+            buttons.push(button)
+            if (localStorage.getItem("joinCode") == element) {
+                button.style.backgroundColor = "red"
+            }
+            button.addEventListener("click", () => {
+                for (const bt of buttons) {
+                    bt.style.backgroundColor = "black"
+                }
+                button.style.backgroundColor = "red"
+                localStorage.setItem("joinCode", element)
+                localStorage.setItem("refresh", "true")
+            })
+        }
+        document.getElementById("addChat").addEventListener("click", () => {
+            const room = prompt("Join code")
+            console.log("Prompt:", room)
+            if (room) {
+                console.log(chats)
+                const c = chats.push(room)
+                Cookies.set("chats", JSON.stringify(chats))
+                document.location.reload()
+            } else {
+                alert("Kein Room Code gegeben")
+            }
+        })
+        document.getElementById("changeUsername").addEventListener("click", () => {
+            document.location.href = "/home/start"
+        })
+    </script>
+</body>
+
+</html>

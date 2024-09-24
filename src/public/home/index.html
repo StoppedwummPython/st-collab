@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>ST-Collab Home</title>
+    <style>
+        body {
+            background-color: black;
+            color: white;
+            font-family: Arial, Helvetica, sans-serif;
+        }
+
+        #app {
+            position: fixed;
+            padding-left: 25%;
+        }
+        #navbar {
+            width: 25%;
+            height: 100%;
+            position: fixed;
+            padding-left: 0;
+            z-index: 10000
+        }
+        button {
+            width: 100%;
+            border-radius: 0px;
+            border-color: white;
+            background-color: black;
+            color: white;
+        }
+    </style>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+</head>
+
+<iframe src="/home/views/navbar.html" width="25%" height="100%" id="navbar"></iframe>
+<iframe src="/app/chat" width="75%" height="100%" id="app"></iframe>
+
+<script>
+    const navbar = document.getElementById("navbar")
+    const app = document.getElementById("app")
+
+    if (localStorage.getItem("joinCode") == undefined) {
+        app.contentWindow.location.href = "/home/views/nochat.html"
+    }
+
+    async function waitForRefresh() {
+
+        if (localStorage.getItem("refresh") == "true") {
+            console.log("Refresh!")
+            localStorage.setItem("refresh", "false")
+            console.log(app.contentWindow.location.pathname == "/home/views/nochat.html")
+            if (app.contentWindow.location.pathname == "/home/views/nochat.html") {
+                app.contentWindow.location.href = "/app/chat"
+            } else {
+                app.contentWindow.location.reload()
+            }
+        }
+
+        if (localStorage.getItem("joinCode") == undefined) {
+            app.contentWindow.location.href = "/home/views/nochat.html"
+        }
+    }
+
+    setInterval(waitForRefresh, 100)
+</script>
+
+</html>
