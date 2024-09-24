@@ -25,6 +25,7 @@
 
 <body>
     <button id="addChat">Add chat</button>
+    <button id="addChat">Change Username</button>
     <div id="navbar">
 
     </div>
@@ -48,13 +49,17 @@
             return item
         }
 
+        if (Cookies.get("chats") == undefined) {
+            Cookies.set("chats", "[]", { expires: 365 })
+        }
+
         let chats = JSON.parse(Cookies.get("chats"))
+        if (chats.length == 0) {
+            localStorage.removeItem("joinCode")
+            localStorage.setItem("refresh", "true")
+        }
         console.log(Cookies.get("chats"), Cookies)
 
-        if (chats == undefined) {
-            Cookies.set("chats", "[]")
-            chats = JSON.parse(Cookies.get("chats"))
-        }
         let buttons = []
         for (const element of chats) {
             const button = CreateButton(element)

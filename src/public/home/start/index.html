@@ -9,16 +9,34 @@
             color: white;
             font-family: Arial, Helvetica, sans-serif;
         }
+        .box {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            background-color: gray;
+        }
+
+        .box2 {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+        }
     </style>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
 </head>
 
 <body>
+    <div class="box">
     <h1>Start with ST-Collab</h1>
+    </div><br><br>
+    <div class="box2">
     <form>
         <input type="text" id="username" placeholder="Username"><br>
         <input type="button" id="join" value="Start">
     </form>
+    </div>
     <script>
         document.getElementById("join").onclick = function () {
             localStorage.setItem("username", document.getElementById("username").value)

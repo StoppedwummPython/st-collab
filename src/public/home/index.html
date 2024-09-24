@@ -56,6 +56,9 @@
             }
         }
 
+        if (localStorage.getItem("joinCode") == undefined) {
+            app.contentWindow.location.href = "/home/views/nochat.html"
+        }
     }
 
     setInterval(waitForRefresh, 100)
