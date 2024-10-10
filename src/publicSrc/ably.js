@@ -89,7 +89,7 @@ async function ablyMain() {
     messages.appendChild(item);
     window.scrollTo(0, document.body.scrollHeight);
   })
-
+  
   await currentChannel.subscribe("connect", async (msg) => {
     const content = new String(msg.data)
     ext.onConnect(content)
