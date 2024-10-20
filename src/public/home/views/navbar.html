@@ -77,16 +77,23 @@
             })
         }
         document.getElementById("addChat").addEventListener("click", () => {
-            const room = prompt("Join code")
-            console.log("Prompt:", room)
-            if (room) {
+            let room
+            open("/home/views/add.html")
+            
+            const i = setInterval(() => {
+
+            if (localStorage.getItem("room")) {
+                room = localStorage.getItem("room")
+                localStorage.removeItem("room")
                 console.log(chats)
                 const c = chats.push(room)
                 Cookies.set("chats", JSON.stringify(chats))
                 document.location.reload()
-            } else {
-                alert("Kein Room Code gegeben")
+                clearInterval(i)
             }
+                
+            
+            }, 500)
         })
         document.getElementById("changeUsername").addEventListener("click", () => {
             localStorage.setItem("changeUsername", "true")
