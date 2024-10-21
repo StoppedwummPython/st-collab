@@ -1,4 +1,3 @@
-const bytescale = require("@bytescale/sdk")
 const uuid = require("uuid")
 
 /**
@@ -7,22 +6,27 @@ const uuid = require("uuid")
  */
 module.exports = () => {
   return new Promise((resolve, reject) => {
+    const { uploadFile } = require("@uploadcare/upload-client")
+    
     const fileInput = document.createElement('input');
     fileInput.type = 'file';
     fileInput.accept = 'image/*';  // Only allow image
-
-    const uploadManager = new bytescale.UploadManager({
-      apiKey: "public_kW15cEC3sfYLFmDQCZcpvDWdes81" // This is your API key.
-    })
 
     const onFileSelected = async event => {
       const file = event.target.files[0];
       file.name = `${uuid.v4()}.${file.name}`
       try {
-        const { fileUrl, filePath } = await uploadManager.upload({ data: file });
-        resolve(fileUrl)
+        const result = await uploadFile(
+          file,
+          {
+            publicKey: '5f2f3bbc20f0181e14a8',
+            store: 'auto'
+          }
+        )
+        resolve(result.cdnUrl)
       } catch (e) {
         alert(`Error:\n${e.message}`);
+        reject(e)
       }
     }
     fileInput.addEventListener('change', onFileSelected)
