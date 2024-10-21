@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <style>
+            body {
+                background-color: black;
+                color: white;
+                font-family: Arial, Helvetica, sans-serif;
+            }
+        </style>
+    </head>
+    <body>
+        <form>
+            <input type="text" id="roomcode" placeholder="Room Code">
+            <input type="button" id="join" value="Add room">
+        </form>
+        <script>
+            const code = document.getElementById("roomcode")
+
+            document.getElementById("join").addEventListener("click", () => {
+                localStorage.setItem("room", code.value)
+                window.close()
+            })
+        </script>
+    </body>
+</html>
