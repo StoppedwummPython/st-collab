@@ -10,9 +10,9 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@aws-sdk/client-s3": "^3.654.0",
-    "@bytescale/sdk": "^3.45.0",
-    "ably": "^2.3.1",
+    "@aws-sdk/client-s3": "^3.674.0",
+    "@bytescale/sdk": "^3.47.0",
+    "ably": "^2.4.1",
     "js-cookie": "^3.0.5",
     "node-emoji": "^2.1.3",
     "uuid": "^10.0.0"
