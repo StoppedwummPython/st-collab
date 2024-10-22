@@ -18,6 +18,8 @@ jobs:
               run: |
                 cd src
                 npm i
+                cd publicSrc
+                npm i
 
             - name: Build
               run: |
