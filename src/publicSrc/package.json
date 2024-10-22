@@ -14,7 +14,6 @@
     "@uploadcare/upload-client": "^6.14.2",
     "ably": "^2.4.1",
     "js-cookie": "^3.0.5",
-    "markdown-to-html": "^0.0.13",
     "node-emoji": "^2.1.3",
     "showdown": "^2.1.0",
     "uuid": "^10.0.0"
