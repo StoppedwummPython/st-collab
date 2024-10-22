@@ -147,6 +147,12 @@ async function ablyMain() {
     }, async (username) => {
       await currentChannel.publish("unban", username)
       return username
+    }, async (msg) => {
+      if (badge.hasBadge()) {
+        await currentChannel.publish("chat", localStorage.getItem("username") + " (Gemini AI) <img src='" + badge.hasBadge() + "' width='10'> : " + msg)
+      } else {
+        await currentChannel.publish("chat", localStorage.getItem("username") + " (Gemini AI): " + msg)
+      }
     })
     if (input.value) {
       if (badge.isBadgeCode(badgeList, input.value) != undefined) {
