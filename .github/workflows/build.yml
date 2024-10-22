@@ -14,7 +14,8 @@ jobs:
             - name: Checkout
               uses: actions/checkout@v4
 
-            # Make changes to pull request here
+            - name: Build
+              run: npm run buildDev
       
             - name: Create Pull Request
               uses: peter-evans/create-pull-request@v7
