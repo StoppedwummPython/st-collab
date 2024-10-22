@@ -32,13 +32,3 @@ jobs:
       
             - name: Create Pull Request
               uses: peter-evans/create-pull-request@v7
-              with:
-                commit-message: "Build App"
-                branch: build
-                delete-branch: true
-                sign-commits: true
-                title: Create App
-                body: |
-                    # Changes
-                    Built app
-                maintainer-can-modify: true
