@@ -16,12 +16,21 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
+// ping: document.dispatchEvent(new Event("ping")) 
+
 /**
- * The main function of the Ably chat application.
- * It handles user authentication, sets up the chat channel, and listens for messages.
- * 
  * @async
- * @return {Promise<void>}
+ * @returns {Promise<void>}
+ * Initializes and manages the main chat functionality using Ably for real-time messaging.
+ * 
+ * - Redirects to the app main page if the join code or username is missing.
+ * - Displays system messages in the chat.
+ * - Checks if the user is banned and redirects to the ban page if necessary.
+ * - Migrates badges and displays them in the chat.
+ * - Sets up Ably real-time connection and subscribes to various events such as chat messages, 
+ *   user connections, disconnections, image messages, and bans/unbans.
+ * - Handles sending messages, uploading images, and manages user interactions.
+ * - Publishes user connection message and listens for server pings to respond with "PONG".
  */
 async function ablyMain() {
   if (localStorage.getItem("joinCode") == undefined || localStorage.getItem("username") == undefined) {
@@ -44,7 +53,6 @@ async function ablyMain() {
   }
 
   badge.migrateBadge()
-
   const messages = document.getElementById('messages');
   for (const m of sysM) {
     const content = "System <img src='/app/chat/verified-icon.png' width='10'>: " + m
@@ -76,6 +84,10 @@ async function ablyMain() {
 
   currentChannel = ably.channels.get("chat_" + localStorage.getItem("joinCode"))
   const devMode = await fetch("/dev")
+
+  document.addEventListener("ping", () => {
+    currentChannel.publish("ping", "")
+  })
 
   await require("./history")(currentChannel, messages)
 
@@ -132,6 +144,10 @@ async function ablyMain() {
     if (localStorage.getItem("username") == username.data) {
       Ck.set("ban", "0", {expires:365})
     }
+  })
+
+  await currentChannel.subscribe("ping", (msg) => {
+    currentChannel.publish("chat", localStorage.getItem("username") + ": PONG")
   })
 
   await currentChannel.publish("connect", localStorage.getItem("username"))
