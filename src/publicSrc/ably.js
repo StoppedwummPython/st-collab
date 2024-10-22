@@ -1,5 +1,7 @@
 /*
 Copyright 2024 Stoppedwumm
+@Stoppedwumm
+@StoppedwummPython
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -25,7 +27,7 @@ async function ablyMain() {
   if (localStorage.getItem("joinCode") == undefined || localStorage.getItem("username") == undefined) {
     document.location.href = "/app/"
   }
-  const sysM = ["Eine native Windows App ist nun verfügbar. Klicke <a href='https://drive.google.com/file/d/1VL-dlHUPc1oMNSTZ5LBxgoxufSI3p57s/view?usp=sharing'>hier</a> um sie herunterzuladen.", "btw opensource <a href='https://github.com/StoppedwummPython/st-collab'>github</a>"]
+  const sysM = ["Eine native Windows App ist nun verfügbar. Klicke <a href='https://drive.google.com/file/d/1VL-dlHUPc1oMNSTZ5LBxgoxufSI3p57s/view?usp=sharing'>hier</a> um sie herunterzuladen.", "btw opensource <a href='https://github.com/StoppedwummPython/st-collab'>github</a>", "Another project (eaglergrab): <a href='https://github.com/Stoppedwumm-Studios/eaglerGrab/releases/tag/v1.2.3'>here</a>"]
   const Ably = require('ably');
   const upload = require("./upload")
   const badge = require("./badge")
@@ -168,12 +170,11 @@ async function ablyMain() {
   });
 
   document.getElementById("image_upload").addEventListener("click", async () => {
-    console.log("Upload button pressed")
-    const image = await upload()
     try {
+      const image = await upload()
       await currentChannel.publish("chat_image", JSON.stringify([localStorage.getItem("username"), image]))
     } catch (e) {
-      alert("Datei wurde von ably verweigert, wahrscheinlich zu groß")
+      console.log(e)
     }
   })
 }
