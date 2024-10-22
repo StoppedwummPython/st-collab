@@ -15,6 +15,7 @@
   "license": "ISC",
   "dependencies": {
     "ably": "^2.3.1",
-    "express": "latest"
+    "express": "latest",
+    "markdown-to-html": "^0.0.13"
   }
 }

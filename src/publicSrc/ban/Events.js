@@ -1,11 +1,15 @@
 const ck = require('js-cookie')
 let m = {}
+const { GoogleGenerativeAI } = require("@google/generative-ai");
+const showdown  = require('showdown')
+const converter = new showdown.Converter();
+const key = "AIzaSyAzxjzh5HGYlKwadlxUtC3R2-hELvmWS1g"
 
 /**
  * Sends a message to the chat
  * @param {string} msg The message to be sent
  */
-m.chat = async (msg, ban, unban) => {
+m.chat = async (msg, ban, unban, respond) => {
     console.log(msg)
     if (msg.startsWith("/ban")) {
         console.log("Is ban")
@@ -25,6 +29,20 @@ m.chat = async (msg, ban, unban) => {
             console.log(uname)
             await unban(uname)
         }
+        return
+    }
+    if (msg.startsWith("/apps ai")) {
+        console.log("Is admin")
+        console.log("Valid")
+        
+        let aiPrompt = msg.replace("/apps ai ", "")
+        console.log(aiPrompt)
+        const genAI = new GoogleGenerativeAI(key);
+
+        const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
+
+        const modelResponse = await model.generateContent([aiPrompt]);
+        await respond(converter.makeHtml(modelResponse.response.text()))
         return
     }
 }
