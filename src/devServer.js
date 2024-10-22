@@ -59,6 +59,17 @@ app.get("/adminConsole", (req, res) => {
     */
 })
 
+app.post("/adminConsole", (req, res) => {
+    if (req.query.code != "1234") {
+        res.sendStatus(403)
+        return
+    }
+
+    res.send("<h1>Admin Panel</h1><p>This is the admin panel. You can do admin things here.</p>")
+    /* 
+    ToDo: Add Admin Panel
+    */
+})
 
 app.listen(3000, () => {
     console.log("Dev Server running on port", 3000)
