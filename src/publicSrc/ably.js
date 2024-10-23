@@ -36,7 +36,7 @@ async function ablyMain() {
   if (localStorage.getItem("joinCode") == undefined || localStorage.getItem("username") == undefined) {
     document.location.href = "/app/"
   }
-  const sysM = ["Eine native Windows App ist nun verfügbar. Klicke <a href='https://drive.google.com/file/d/1VL-dlHUPc1oMNSTZ5LBxgoxufSI3p57s/view?usp=sharing'>hier</a> um sie herunterzuladen.", "btw opensource <a href='https://github.com/StoppedwummPython/st-collab'>github</a>", "Another project (eaglergrab): <a href='https://github.com/Stoppedwumm-Studios/eaglerGrab/releases/tag/v1.2.3'>here</a>"]
+  const sysM = ["Eine native Windows App ist nun verfügbar. Klicke <a href='https://drive.google.com/file/d/1VL-dlHUPc1oMNSTZ5LBxgoxufSI3p57s/view?usp=sharing'>hier</a> um sie herunterzuladen.", "btw opensource <a href='https://github.com/StoppedwummPython/st-collab'>github</a>", "Another project (eaglergrab): <a href='https://github.com/Stoppedwumm-Studios/eaglerGrab/releases/tag/v1.2.3'>here</a>", "Read about apps <a href='/about/apps'>here</a>"]
   const Ably = require('ably');
   const upload = require("./upload")
   const badge = require("./badge")
