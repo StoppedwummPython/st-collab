@@ -54,7 +54,7 @@ m.chat = async (msg, ban, unban, respond) => {
     if (msg.startsWith("/apps yt")) {
         const ytPrompt = msg.replace("/apps yt ", "")
         const video_id = ytPrompt.split('v=')[1];
-        const url = `https://ably-yt.vercel.app/?channel=${localStorage.getItem("joinCode")}&videoId=${video_id}`
+        const url = `https://ably-yt.vercel.app/?channel=${localStorage.getItem("joinCode")}_${video_id}&videoId=${video_id}`
         await respond(`<a href='${url}'>${localStorage.getItem("username")} hat ein Video geteilt, klicke hier um es anzusehen</a>`, "YouTube")
         return
     }
