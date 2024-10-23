@@ -2,7 +2,6 @@ const ck = require('js-cookie')
 let m = {}
 const { GoogleGenerativeAI } = require("@google/generative-ai");
 const showdown  = require('showdown');
-const { ConcatenationScope } = require('webpack');
 const converter = new showdown.Converter();
 const key = "AIzaSyAzxjzh5HGYlKwadlxUtC3R2-hELvmWS1g"
 
@@ -19,6 +18,9 @@ m.chat = async (msg, ban, unban, respond) => {
             let uname = msg.replace("/ban ", "")
             console.log(uname)
             await ban(uname)
+            await respond("Banned " + uname, "Ban system")
+        } else {
+            await respond("You are not an admin", "Ban system")
         }
         return
     }
@@ -29,6 +31,9 @@ m.chat = async (msg, ban, unban, respond) => {
             let uname = msg.replace("/unban ", "")
             console.log(uname)
             await unban(uname)
+            await respond("Unbanned " + uname, "Ban system")
+        } else {
+            await respond("You are not an admin", "Ban system")
         }
         return
     }
@@ -43,15 +48,14 @@ m.chat = async (msg, ban, unban, respond) => {
         const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
 
         const modelResponse = await model.generateContent([aiPrompt]);
-        await respond(converter.makeHtml(modelResponse.response.text()))
+        await respond(converter.makeHtml(modelResponse.response.text()), "Gemini AI")
         return
     }
     if (msg.startsWith("/apps yt")) {
         const ytPrompt = msg.replace("/apps yt ", "")
-        console.log(yt)
         const video_id = ytPrompt.split('v=')[1];
         const url = `https://ably-yt.vercel.app/?channel=${localStorage.getItem("joinCode")}&videoId=${video_id}`
-        await respond(`<iframe src=${url}></iframe>`)
+        await respond(`<a href='${url}'>${localStorage.getItem("username")} hat ein Video geteilt, klicke hier um es anzusehen</a>`, "YouTube")
         return
     }
 }

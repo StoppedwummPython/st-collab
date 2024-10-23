@@ -163,11 +163,11 @@ async function ablyMain() {
     }, async (username) => {
       await currentChannel.publish("unban", username)
       return username
-    }, async (msg) => {
+    }, async (msg, appName) => {
       if (badge.hasBadge()) {
-        await currentChannel.publish("chat", localStorage.getItem("username") + " (Gemini AI) <img src='" + badge.hasBadge() + "' width='10'> : " + msg)
+        await currentChannel.publish("chat", localStorage.getItem("username") + " (" + appName + ") <img src='" + badge.hasBadge() + "' width='10'> : " + msg)
       } else {
-        await currentChannel.publish("chat", localStorage.getItem("username") + " (Gemini AI): " + msg)
+        await currentChannel.publish("chat", localStorage.getItem("username") + " (" + appName + "): " + msg)
       }
     })
     if (input.value) {
