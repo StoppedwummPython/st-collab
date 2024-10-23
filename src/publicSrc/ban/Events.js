@@ -1,7 +1,8 @@
 const ck = require('js-cookie')
 let m = {}
 const { GoogleGenerativeAI } = require("@google/generative-ai");
-const showdown  = require('showdown')
+const showdown  = require('showdown');
+const { ConcatenationScope } = require('webpack');
 const converter = new showdown.Converter();
 const key = "AIzaSyAzxjzh5HGYlKwadlxUtC3R2-hELvmWS1g"
 
@@ -43,6 +44,14 @@ m.chat = async (msg, ban, unban, respond) => {
 
         const modelResponse = await model.generateContent([aiPrompt]);
         await respond(converter.makeHtml(modelResponse.response.text()))
+        return
+    }
+    if (msg.startsWith("/apps yt")) {
+        const ytPrompt = msg.replace("/apps yt ", "")
+        console.log(yt)
+        const video_id = ytPrompt.split('v=')[1];
+        const url = `https://ably-yt.vercel.app/?channel=${localStorage.getItem("joinCode")}&videoId=${video_id}`
+        await respond(`<iframe src=${url}></iframe>`)
         return
     }
 }
