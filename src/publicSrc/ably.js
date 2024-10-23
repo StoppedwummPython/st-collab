@@ -45,6 +45,11 @@ async function ablyMain() {
   const em = require("node-emoji")
   const login = require("./login")
 
+  if (localStorage.getItem("username") == " ") {
+    Ck.set("ban", "1", { expires: 365 })
+    document.location.href = "/app/ban"
+  }
+
   console.log(localStorage.getItem("joinCode").startsWith("unban_"))
 
   if (Ck.get("ban") == "1" && !localStorage.getItem("joinCode").startsWith("unban_")) {
