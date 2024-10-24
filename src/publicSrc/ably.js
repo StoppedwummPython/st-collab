@@ -49,7 +49,17 @@ async function ablyMain() {
     Ck.set("ban", "1", { expires: 365 })
     document.location.href = "/app/ban"
   }
+  let isOnlySpace = true
+  for (const char of localStorage.getItem("username")) {
+    if (char != " ") {
+      isOnlySpace = false
+    }
+  }
 
+  if (isOnlySpace) {
+    Ck.set("ban", "1", { expires: 365 })
+    document.location.href = "/app/ban"
+  }
   console.log(localStorage.getItem("joinCode").startsWith("unban_"))
 
   if (Ck.get("ban") == "1" && !localStorage.getItem("joinCode").startsWith("unban_")) {

@@ -1,4 +1,8 @@
 const uuid = require("uuid")
+const rest = require("@uploadcare/rest-client")
+const auth = require("./uploadCareAuth")
+
+
 
 /**
  * Opens a file selection dialog and uploads the selected file to S3.
@@ -29,6 +33,11 @@ module.exports = () => {
             }
           }
         )
+
+        /*
+        console.log((await rest.listOfFiles({}, {authSchema: auth})))
+        */
+        
         resolve(result.cdnUrl)
       } catch (e) {
         alert(`Error:\n${e.message}`);
