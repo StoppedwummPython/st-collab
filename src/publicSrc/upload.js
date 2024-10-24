@@ -20,7 +20,13 @@ module.exports = () => {
           file,
           {
             publicKey: '5f2f3bbc20f0181e14a8',
-            store: 'auto'
+            store: 'auto',
+            metadata: {
+              "type": "image",
+              "uploadedBy": localStorage.getItem("username"),
+              "channel": localStorage.getItem("joinCode"),
+              "client": "mainStCollab"
+            }
           }
         )
         resolve(result.cdnUrl)
