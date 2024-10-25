@@ -58,6 +58,20 @@ m.chat = async (msg, ban, unban, respond) => {
         await respond(`<a href='${url}'>${localStorage.getItem("username")} hat ein Video geteilt, klicke hier um es anzusehen</a>`, "YouTube")
         return
     }
+    if (msg.startsWith("/apps script")) {
+        const script = msg.replace("/apps script ", "")
+        if (ck.get("admin") == "1") {
+            try {
+                console.log("Valid")
+                await respond(eval(script), "Script Return")
+            } catch (e) {
+                await respond(e, "Script Error")
+            }
+        } else {
+            await respond("You are not an admin", "Script")
+        }
+        return
+    }
 }
 
 /**

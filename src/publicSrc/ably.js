@@ -44,6 +44,10 @@ async function ablyMain() {
   const Ck = require('js-cookie')
   const em = require("node-emoji")
   const login = require("./login")
+  const showdown  = require('showdown');
+  const converter = new showdown.Converter({
+    openLinksInNewWindow: true
+  });
 
   if (localStorage.getItem("username") == " ") {
     Ck.set("ban", "1", { expires: 365 })
@@ -114,7 +118,7 @@ async function ablyMain() {
     const content = new String(msg.data)
     ext.onMessage(content)
     let item = document.createElement('li');
-    item.innerHTML = content;
+    item.innerHTML = converter.makeHtml(content).replace("<p>", "").replace("</p>", "");
     messages.appendChild(item);
     window.scrollTo(0, document.body.scrollHeight);
   })

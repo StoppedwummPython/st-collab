@@ -4,6 +4,11 @@
 <head>
     <title>Apps</title>
     <style>
+        @keyframes blink {
+            from {padding: 5px; padding-left: 0px};
+            to {padding: 10px; padding-left: 0px;}
+        }
+
         body {
             background-color: black;
             color: white;
@@ -14,6 +19,20 @@
             background-color: rgb(62, 62, 62);
             border-radius: 5px;
             padding: 5px;
+            padding-left: 0px;
+        }
+
+        code:hover {
+            animation: blink 0.5s;
+            animation-direction: alternate;
+            animation-iteration-count: infinite;
+            padding: 10px;
+        }
+
+        img:hover {
+            animation: blink 0.5s;
+            animation-direction: alternate;
+            animation-iteration-count: infinite;
         }
     </style>
     <meta name="viewport" content="width=device-width, initial-scale=1" /> 
