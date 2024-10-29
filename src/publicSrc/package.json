@@ -18,7 +18,7 @@
     "js-video-url-parser": "^0.5.1",
     "node-emoji": "^2.1.3",
     "showdown": "^2.1.0",
-    "uuid": "^10.0.0"
+    "uuid": "^11.0.2"
   },
   "devDependencies": {
     "webpack": "latest",
