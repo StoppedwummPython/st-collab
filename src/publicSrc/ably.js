@@ -48,6 +48,8 @@ async function ablyMain() {
   const converter = new showdown.Converter({
     openLinksInNewWindow: true
   });
+  const {injectSpeedInsights} = require('@vercel/speed-insights')
+  injectSpeedInsights()
 
   if (localStorage.getItem("username") == " ") {
     Ck.set("ban", "1", { expires: 365 })
