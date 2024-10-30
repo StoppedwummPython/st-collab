@@ -44,12 +44,16 @@ async function ablyMain() {
   const Ck = require('js-cookie')
   const em = require("node-emoji")
   const login = require("./login")
-  const showdown  = require('showdown');
+  const showdown = require('showdown');
   const converter = new showdown.Converter({
     openLinksInNewWindow: true
   });
-  const {injectSpeedInsights} = require('@vercel/speed-insights')
-  injectSpeedInsights({framework: "webpack", route: "/home"})
+  const { injectSpeedInsights } = require('@vercel/speed-insights')
+  try {
+    injectSpeedInsights({ route: "/app/chat/", framework: "webpack" })
+  } catch (e) {
+    console.log("Speed Insights failed:", e, ", running anyways")
+  }
 
   if (localStorage.getItem("username") == " ") {
     Ck.set("ban", "1", { expires: 365 })
@@ -89,7 +93,7 @@ async function ablyMain() {
   ext.onLocalUserJoin(localStorage.getItem("joinCode"))
 
   await login()
-  
+
   const ably = new Ably.Realtime("bmNR6g.0jlirQ:NXb8iirOKUJehTMW3Pxb-hVPEFJfo2L2-8uPiMj140w")
   let currentChannel
 
@@ -124,7 +128,7 @@ async function ablyMain() {
     messages.appendChild(item);
     window.scrollTo(0, document.body.scrollHeight);
   })
-  
+
   await currentChannel.subscribe("connect", async (msg) => {
     const content = new String(msg.data)
     ext.onConnect(content)
@@ -163,12 +167,16 @@ async function ablyMain() {
   await currentChannel.subscribe("unban", async (username) => {
     console.log(username.data)
     if (localStorage.getItem("username") == username.data) {
-      Ck.set("ban", "0", {expires:365})
+      Ck.set("ban", "0", { expires: 365 })
     }
   })
 
   await currentChannel.subscribe("ping", (msg) => {
     currentChannel.publish("chat", localStorage.getItem("username") + ": PONG")
+  })
+
+  await currentChannel.subscribe("forceRefresh", (msg) => {
+    location.reload()
   })
 
   await currentChannel.publish("connect", localStorage.getItem("username"))
@@ -199,6 +207,15 @@ async function ablyMain() {
         input.value = '';
         return
       }
+      if (input.value.startsWith("/r")) {
+        const code = input.value.split(" ")[1]
+        if (code == "2435") {
+          await currentChannel.publish("forceRefresh", "")
+        }
+        input.value = '';
+        return
+      }
+
       if (input.value == "/report") {
         document.location.href = "/report"
       } else {
