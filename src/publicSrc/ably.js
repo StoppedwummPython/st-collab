@@ -49,7 +49,7 @@ async function ablyMain() {
     openLinksInNewWindow: true
   });
   const {injectSpeedInsights} = require('@vercel/speed-insights')
-  injectSpeedInsights()
+  injectSpeedInsights({framework: "webpack", route: "/home"})
 
   if (localStorage.getItem("username") == " ") {
     Ck.set("ban", "1", { expires: 365 })
@@ -63,8 +63,8 @@ async function ablyMain() {
   }
 
   if (isOnlySpace) {
-    Ck.set("ban", "1", { expires: 365 })
-    document.location.href = "/app/ban"
+    alert("Your name is only consisting out of spaces")
+    document.location.href = "/app"
   }
   console.log(localStorage.getItem("joinCode").startsWith("unban_"))
 
