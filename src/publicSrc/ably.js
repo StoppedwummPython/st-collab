@@ -33,6 +33,17 @@ limitations under the License.
  * - Publishes user connection message and listens for server pings to respond with "PONG".
  */
 async function ablyMain() {
+  const devMode = (await fetch("/dev")).ok
+  console.log("DEVMODE:", devMode)
+  let alog = function () {
+    return null
+  }
+  if (devMode) {
+    console.log("Advanced Logging enabled")
+    alog = (moduleName, ...args) => {
+      console.log(`[AL] [${moduleName}]`, ...args)
+    }
+  }
   if (localStorage.getItem("joinCode") == undefined || localStorage.getItem("username") == undefined) {
     document.location.href = "/app/"
   }
@@ -49,35 +60,41 @@ async function ablyMain() {
     openLinksInNewWindow: true
   });
   const { injectSpeedInsights } = require('@vercel/speed-insights')
+  alog("Speed Insights", "Initializing")
   try {
     injectSpeedInsights({ route: "/app/chat/", framework: "webpack" })
   } catch (e) {
     console.log("Speed Insights failed:", e, ", running anyways")
   }
 
-  if (localStorage.getItem("username") == " ") {
-    Ck.set("ban", "1", { expires: 365 })
-    document.location.href = "/app/ban"
-  }
+  alog("Name", "Checking if only spaces")
   let isOnlySpace = true
   for (const char of localStorage.getItem("username")) {
     if (char != " ") {
+      alog("Name", "Not only spaces:", char)
       isOnlySpace = false
     }
   }
-
+  alog("Name", "Only spaces:", isOnlySpace)
   if (isOnlySpace) {
+    alog("Name", "Redirecting")
     alert("Your name is only consisting out of spaces")
     document.location.href = "/app"
   }
-  console.log(localStorage.getItem("joinCode").startsWith("unban_"))
+
+
+  alog("Unban channel", localStorage.getItem("joinCode").startsWith("unban_"))
 
   if (Ck.get("ban") == "1" && !localStorage.getItem("joinCode").startsWith("unban_")) {
+    alog("Banned", "Redirecting to ban page")
     document.location.href = "/app/ban"
     throw new Error("Banned")
   }
 
+  alog("Badge", "Migrating")
   badge.migrateBadge()
+
+  alog("System", "Loading system messages")
   const messages = document.getElementById('messages');
   for (const m of sysM) {
     const content = "System <img src='/app/chat/verified-icon.png' width='10'>: " + m
@@ -85,38 +102,48 @@ async function ablyMain() {
     item.innerHTML = content;
     messages.appendChild(item);
     window.scrollTo(0, document.body.scrollHeight);
+    alog("System", m)
   }
 
   const badgeList = await badge.grabBadgeList()
-
+  alog("Badge List", badgeList)
+  alog("Chat", "Setting up chat")
   document.title = "Chat Room " + localStorage.getItem("joinCode")
+  alog("Extension", "Setting up extension")
   ext.onLocalUserJoin(localStorage.getItem("joinCode"))
 
+  alog("Login", "Logging in")
   await login()
 
+  alog("Ably", "Setting up Ably")
   const ably = new Ably.Realtime("bmNR6g.0jlirQ:NXb8iirOKUJehTMW3Pxb-hVPEFJfo2L2-8uPiMj140w")
   let currentChannel
 
   let ready = false
 
   ably.connection.once("connected", () => {
+    alog("Ably", "Connected")
     ready = true
   })
 
+  alog("Ably", "Waiting for connection")
   while (!ready) {
     await (() => { return new Promise((res, rej) => { setTimeout(() => { res(250) }, 250) }) })()
   }
 
+  alog("Ably", "Setting up channel")
   currentChannel = ably.channels.get("chat_" + localStorage.getItem("joinCode"))
-  const devMode = await fetch("/dev")
 
+  alog("Ably", "Setting up ping")
   document.addEventListener("ping", () => {
     currentChannel.publish("ping", "")
   })
 
+  alog("Ably", "Setting up history")
   await require("./history")(currentChannel, messages)
 
-  if (devMode.ok) {
+  alog("Ably", "Setting up listeners")
+  if (devMode) {
     fetch("/dev/listen?channel=" + localStorage.getItem("joinCode"))
   }
 
@@ -179,8 +206,10 @@ async function ablyMain() {
     location.reload()
   })
 
+  alog("Ably", "Publishing connect")
   await currentChannel.publish("connect", localStorage.getItem("username"))
 
+  alog("Ably", "Setting up form")
   let form = document.getElementById('form');
   let input = document.getElementById('input');
 
@@ -200,11 +229,15 @@ async function ablyMain() {
       }
     })
     if (input.value) {
-      if (badge.isBadgeCode(badgeList, input.value) != undefined) {
-        badge.giveBadge(badge.isBadgeCode(badgeList, input.value))
-        input.value = 'Erfolgreich!';
-        await (() => { return new Promise((res, rej) => { setTimeout(() => { res(1) }, 5000) }) })()
-        input.value = '';
+      if (input.value.startsWith("/code")) {
+        const code = prompt("Code?")
+        alog("Ably", "Code: " + code, "Is badge" + badge.isBadgeCode(badgeList, code))
+        if (code && (badge.isBadgeCode(badgeList, code) != "undefined" || badge.isBadgeCode(badgeList,code) != undefined)) {
+          badge.giveBadge(badge.isBadgeCode(badgeList, code))
+          input.value = 'Erfolgreich!';
+          await (() => { return new Promise((res, rej) => { setTimeout(() => { res(1) }, 5000) }) })()
+          input.value = '';
+        }
         return
       }
       if (input.value.startsWith("/r")) {
@@ -229,6 +262,8 @@ async function ablyMain() {
     }
   });
 
+
+  alog("Ably", "Setting up image upload")
   document.getElementById("image_upload").addEventListener("click", async () => {
     try {
       const image = await upload()
