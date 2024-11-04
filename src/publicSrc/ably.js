@@ -46,13 +46,17 @@ async function ablyMain() {
   } else {
     try {
       await window.PokiSDK.init()
+      await window.PokiSDK.gameLoadingFinished()
+      await window.PokiSDK.gameplayStarted()
     } catch (e) {
       console.log(e, "but fuck it")
     }
-    await window.PokiSDK.gameLoadingFinished()
-    await window.PokiSDK.gameplayStarted()
     setInterval(async () => {
-      await window.PokiSDK.commercialBreak()
+      try {
+        await window.PokiSDK.commercialBreak()
+      } catch (e) {
+        console.log(e, "ad error")
+      }
     }, 30000)
   }
   if (localStorage.getItem("joinCode") == undefined || localStorage.getItem("username") == undefined) {
