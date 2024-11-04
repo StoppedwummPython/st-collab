@@ -43,6 +43,13 @@ async function ablyMain() {
     alog = (moduleName, ...args) => {
       console.log(`[AL] [${moduleName}]`, ...args)
     }
+  } else {
+    await window.PokiSDK.init()
+    await window.PokiSDK.gameLoadingFinished()
+    await window.PokiSDK.gameplayStarted()
+    setInterval(async () => {
+      await window.PokiSDK.commercialBreak()
+    }, 30000)
   }
   if (localStorage.getItem("joinCode") == undefined || localStorage.getItem("username") == undefined) {
     document.location.href = "/app/"
