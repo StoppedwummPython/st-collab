@@ -44,7 +44,11 @@ async function ablyMain() {
       console.log(`[AL] [${moduleName}]`, ...args)
     }
   } else {
-    await window.PokiSDK.init()
+    try {
+      await window.PokiSDK.init()
+    } catch (e) {
+      console.log(e, "but fuck it")
+    }
     await window.PokiSDK.gameLoadingFinished()
     await window.PokiSDK.gameplayStarted()
     setInterval(async () => {
