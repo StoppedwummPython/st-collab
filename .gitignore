@@ -1,3 +1,2 @@
 .vercel
 node_modules
-src/public/app/ably/ably.js
