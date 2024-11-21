@@ -72,6 +72,10 @@ m.chat = async (msg, ban, unban, respond) => {
         }
         return
     }
+    if (msg == "/apps") {
+        await respond("Read about apps <a href='/about/apps'>here</a>", "Apps")
+        return
+    }
 }
 
 /**
