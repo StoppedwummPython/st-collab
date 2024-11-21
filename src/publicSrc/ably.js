@@ -60,6 +60,7 @@ async function ablyMain() {
     openLinksInNewWindow: true
   });
   const { injectSpeedInsights } = require('@vercel/speed-insights')
+  const $ = require("jquery")
   alog("Speed Insights", "Initializing")
   try {
     injectSpeedInsights({ route: "/app/chat/", framework: "webpack" })
