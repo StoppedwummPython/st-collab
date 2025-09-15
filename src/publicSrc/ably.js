@@ -34,16 +34,7 @@ limitations under the License.
  */
 async function ablyMain() {
   const devMode = (await fetch("/dev")).ok
-  console.log("DEVMODE:", devMode)
-  let alog = function () {
-    return null
-  }
-  if (devMode) {
-    console.log("Advanced Logging enabled")
-    alog = (moduleName, ...args) => {
-      console.log(`[AL] [${moduleName}]`, ...args)
-    }
-  }
+  const alog = await require("./logging/alog")()
   if (localStorage.getItem("joinCode") == undefined || localStorage.getItem("username") == undefined) {
     document.location.href = "/app/"
   }

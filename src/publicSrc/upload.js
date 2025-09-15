@@ -9,7 +9,10 @@ const auth = require("./uploadCareAuth")
  * @return {Promise<string>} A promise that resolves with the uploaded file name.
  */
 module.exports = () => {
-  return new Promise((resolve, reject) => {
+  return new Promise(async (resolve, reject) => {
+    const alog = await require("./logging/alog")()
+    alog("Upload", "Opening file selection dialog")
+    // Using Uploadcare for file uploads
     const { uploadFile } = require("@uploadcare/upload-client")
     
     const fileInput = document.createElement('input');
@@ -17,9 +20,11 @@ module.exports = () => {
     fileInput.accept = 'image/*';  // Only allow image
 
     const onFileSelected = async event => {
+      alog("Upload", "File selected")
       const file = event.target.files[0];
       file.name = `${uuid.v4()}.${file.name}`
       try {
+        alog("Upload", `Uploading file: ${file.name}`)
         const result = await uploadFile(
           file,
           {
@@ -37,14 +42,17 @@ module.exports = () => {
         /*
         console.log((await rest.listOfFiles({}, {authSchema: auth})))
         */
-        
+        alog("Upload", `File uploaded successfully: ${result.cdnUrl}`)
         resolve(result.cdnUrl)
       } catch (e) {
+        alog("Upload", `Error uploading file: ${e.message}`)
         alert(`Error:\n${e.message}`);
         reject(e)
       }
     }
     fileInput.addEventListener('change', onFileSelected)
+
+    alog("Upload", "File selection dialog opened")
 
     fileInput.click();
   })

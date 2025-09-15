@@ -47,6 +47,17 @@ app.get("/dev/listen", async (req, res) => {
     res.sendStatus(200)
 })
 
+app.post("/dev/log", async (req, res) => {
+    let body = []
+    req.on('data', (chunk) => {
+        body.push(chunk);
+    }).on('end', () => {
+        body = Buffer.concat(body).toString();
+        console.log("[Client Log] " + body)
+        res.sendStatus(200)
+    })
+})
+
 app.get("/adminConsole", (req, res) => {
     if (req.query.code != "1234") {
         res.sendStatus(403)
