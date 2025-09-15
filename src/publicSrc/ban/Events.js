@@ -91,7 +91,7 @@ m.message = async (msg) => {
  * @param {string} connectmessage The username of the user that connected
  */
 m.connect = async (connectmessage) => {
-    
+    console.log(connectmessage)
 }
 
 /**
