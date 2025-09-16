@@ -33,8 +33,25 @@ limitations under the License.
  * - Publishes user connection message and listens for server pings to respond with "PONG".
  */
 async function ablyMain() {
-  const devMode = (await fetch("/dev")).ok
   const alog = await require("./logging/alog")()
+
+  alog("Load", "Starting main function")
+  alog("Device Info (User Agent)", navigator.userAgent)
+  alog("Device Info (Language)", navigator.language)
+  alog("Device Info (Platform)", navigator.platform)
+  alog("Device Info (Vendor)", navigator.vendor)
+  alog("Device Info (Online)", navigator.onLine)
+  alog("Device Info (Cookies Enabled)", navigator.cookieEnabled)
+  alog("Device Info (Hardware Concurrency)", navigator.hardwareConcurrency)
+  alog("Device Info (Max Touch Points)", navigator.maxTouchPoints)
+  alog("Device Info (Do Not Track)", navigator.doNotTrack)
+  alog("Device Info (Screen Width)", screen.width)
+  alog("Device Info (Screen Height)", screen.height)
+  alog("Device Info (Color Depth)", screen.colorDepth)
+  alog("Device Info (Pixel Depth)", screen.pixelDepth)
+  alog("Device Info (Timezone)", Intl.DateTimeFormat().resolvedOptions().timeZone)
+
+  const devMode = (await fetch("/dev")).ok
   if (localStorage.getItem("joinCode") == undefined || localStorage.getItem("username") == undefined) {
     document.location.href = "/app/"
   }
