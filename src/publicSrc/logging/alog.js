@@ -3,9 +3,10 @@ if (localStorage.getItem("logDump") == null) {
   localStorage.setItem("logDump", "[]")
 }
 
-async function getAlog(params) {
+async function getAlog() {
     const devMode = (await (await fetch("/dev")).text()) == "DevMode enabled"
   console.log("DEVMODE:", devMode)
+
   let alog = function () {
     return null
   }
@@ -24,7 +25,9 @@ async function getAlog(params) {
       const logEntry = {
         time: time,
         module: moduleName,
-        message: args.join(" ")
+        message: args.join(" "),
+        error: false,
+        critical: false
       }
       const logDump = JSON.parse(localStorage.getItem("logDump"))
       logDump.push(logEntry)

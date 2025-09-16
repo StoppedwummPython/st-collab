@@ -34,6 +34,7 @@ limitations under the License.
  */
 async function ablyMain() {
   const alog = await require("./logging/alog")()
+  const aerror = await require("./logging/aerror")()
 
   alog("Load", "Starting main function")
   alog("Device Info (User Agent)", navigator.userAgent)
@@ -64,6 +65,7 @@ async function ablyMain() {
   const em = require("node-emoji")
   const login = require("./login")
   const showdown = require('showdown');
+  aerror("Test Error", true, "If this is in production, something is very wrong (or just demenetia from my side)")
   const converter = new showdown.Converter({
     openLinksInNewWindow: true
   });
@@ -241,7 +243,7 @@ async function ablyMain() {
       if (input.value.startsWith("/code")) {
         const code = prompt("Code?")
         alog("Ably", "Code: " + code, "Is badge" + badge.isBadgeCode(badgeList, code))
-        if (code && (badge.isBadgeCode(badgeList, code) != "undefined" || badge.isBadgeCode(badgeList,code) != undefined)) {
+        if (code && (badge.isBadgeCode(badgeList, code) != "undefined" || badge.isBadgeCode(badgeList, code) != undefined)) {
           badge.giveBadge(badge.isBadgeCode(badgeList, code))
           input.value = 'Erfolgreich!';
           await (() => { return new Promise((res, rej) => { setTimeout(() => { res(1) }, 5000) }) })()
@@ -259,7 +261,9 @@ async function ablyMain() {
       }
 
       if (input.value == "/report") {
-        document.location.href = "/report"
+        //document.location.href = "/report"
+
+        aerror("Commands", false, "/report is not implemented yet")
       } else {
         if (badge.hasBadge()) {
           await currentChannel.publish("chat", localStorage.getItem("username") + " <img src='" + badge.hasBadge() + "' width='10'> : " + em.emojify(input.value))
@@ -281,6 +285,12 @@ async function ablyMain() {
       console.log(e)
     }
   })
+  alog("Load", "Last checks, hang tight!")
+
+  // check if variables are their expected type
+  if (typeof localStorage.getItem("joinCode") != "string" || typeof localStorage.getItem("username") != "string") {
+    aerror("Load", true, "Variables not their expected type")
+  }
 }
 
 /*

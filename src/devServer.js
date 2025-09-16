@@ -58,6 +58,28 @@ app.post("/dev/log", async (req, res) => {
     })
 })
 
+app.post("/dev/error", async (req, res) => {
+    let body = []
+    req.on('data', (chunk) => {
+        body.push(chunk);
+    }).on('end', () => {
+        body = Buffer.concat(body).toString();
+        console.error("[Client Error] " + body)
+        res.sendStatus(200)
+    })
+})
+
+app.post("/dev/error/critical", async (req, res) => {
+    let body = []
+    req.on('data', (chunk) => {
+        body.push(chunk);
+    }).on('end', () => {
+        body = Buffer.concat(body).toString();
+        console.error("[Client CRITICAL Error] " + body)
+        res.sendStatus(200)
+    })
+})
+
 app.get("/adminConsole", (req, res) => {
     if (req.query.code != "1234") {
         res.sendStatus(403)
