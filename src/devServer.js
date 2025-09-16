@@ -11,7 +11,7 @@ ably.connection.on("connected", () => {
 app.use(e.static("./public"))
 
 app.get("/dev", (req, res) => {
-    res.sendStatus(200)
+    res.sendStatus(200).send("DevMode enabled")
 })
 
 app.get("/mode", (req, res) => {

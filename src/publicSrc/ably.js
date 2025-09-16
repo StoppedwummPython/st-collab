@@ -51,7 +51,7 @@ async function ablyMain() {
   alog("Device Info (Pixel Depth)", screen.pixelDepth)
   alog("Device Info (Timezone)", Intl.DateTimeFormat().resolvedOptions().timeZone)
 
-  const devMode = (await fetch("/dev")).ok
+  const devMode = (await (await fetch("/dev")).text()) == "DevMode enabled"
   if (localStorage.getItem("joinCode") == undefined || localStorage.getItem("username") == undefined) {
     document.location.href = "/app/"
   }

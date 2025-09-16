@@ -4,7 +4,7 @@ if (localStorage.getItem("logDump") == null) {
 }
 
 async function getAlog(params) {
-    const devMode = (await fetch("/dev")).ok
+    const devMode = (await (await fetch("/dev")).text()) == "DevMode enabled"
   console.log("DEVMODE:", devMode)
   let alog = function () {
     return null
