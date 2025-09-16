@@ -11,7 +11,7 @@ ably.connection.on("connected", () => {
 app.use(e.static("./public"))
 
 app.get("/dev", (req, res) => {
-    res.sendStatus(200)
+    res.status(200).send("DevMode enabled")
 })
 
 app.get("/mode", (req, res) => {
@@ -47,6 +47,17 @@ app.get("/dev/listen", async (req, res) => {
     res.sendStatus(200)
 })
 
+app.post("/dev/log", async (req, res) => {
+    let body = []
+    req.on('data', (chunk) => {
+        body.push(chunk);
+    }).on('end', () => {
+        body = Buffer.concat(body).toString();
+        console.log("[Client Log] " + body)
+        res.sendStatus(200)
+    })
+})
+
 app.get("/adminConsole", (req, res) => {
     if (req.query.code != "1234") {
         res.sendStatus(403)
@@ -59,6 +70,17 @@ app.get("/adminConsole", (req, res) => {
     */
 })
 
+app.post("/adminConsole", (req, res) => {
+    if (req.query.code != "1234") {
+        res.sendStatus(403)
+        return
+    }
+
+    res.send("<h1>Admin Panel</h1><p>This is the admin panel. You can do admin things here.</p>")
+    /* 
+    ToDo: Add Admin Panel
+    */
+})
 
 app.listen(3000, () => {
     console.log("Dev Server running on port", 3000)

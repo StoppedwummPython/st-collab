@@ -40,7 +40,7 @@
     const app = document.getElementById("app")
 
     if (localStorage.getItem("joinCode") == undefined) {
-        app.contentWindow.location.href = "/home/views/nochat.html"
+        app.contentWindow.location = "/home/views/nochat.html"
     }
 
     /**
@@ -56,11 +56,14 @@
             console.log("Refresh!")
             // Set the refresh flag to false
             localStorage.setItem("refresh", "false")
+            console.log(app.contentWindow.location.pathname)
             // Check if the iframe is currently on the nochat page
             if (app.contentWindow.location.pathname == "/home/views/nochat.html") {
+                console.log("Redirecting to chat page")
                 // Redirect to the chat page
-                app.contentWindow.location.href = "/app/chat"
+                app.contentWindow.location.pathname = "/app/chat"
             } else {
+                console.log("Reloading iframe")
                 // Reload the iframe
                 app.contentWindow.location.reload()
             }
@@ -69,7 +72,7 @@
         // Check if the joinCode is undefined
         if (localStorage.getItem("joinCode") == undefined) {
             // Redirect to the nochat page
-            app.contentWindow.location.href = "/home/views/nochat.html"
+            app.contentWindow.location.pathname = "/home/views/nochat.html"
         }
 
         // Check if the changeUsername flag is true
@@ -77,7 +80,7 @@
             // Set the changeUsername flag to false
             localStorage.setItem("changeUsername", "false")
             // Redirect to the start page
-            document.location.href = "/home/start"
+            document.location.pathname = "/home/start"
         }
     }
 

@@ -10,10 +10,10 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "express": "^4.19.2",
-    "express-openid-connect": "^2.17.1"
+    "express": "latest",
+    "express-openid-connect": "latest"
   },
   "devDependencies": {
-    "vercel": "^37.5.3"
+    "vercel": "^48.0.0"
   }
 }

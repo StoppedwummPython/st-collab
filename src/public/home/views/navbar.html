@@ -61,6 +61,15 @@
         console.log(Cookies.get("chats"), Cookies)
 
         let buttons = []
+        const firstButton = CreateButton("12345")
+        firstButton.addEventListener("click", () => {
+            for (const bt of buttons) {
+                bt.style.backgroundColor = "black"
+            }
+            firstButton.style.backgroundColor = "red"
+            localStorage.setItem("joinCode", "12345")
+            localStorage.setItem("refresh", "true")
+        })
         for (const element of chats) {
             const button = CreateButton(element)
             buttons.push(button)
@@ -77,16 +86,23 @@
             })
         }
         document.getElementById("addChat").addEventListener("click", () => {
-            const room = prompt("Join code")
-            console.log("Prompt:", room)
-            if (room) {
-                console.log(chats)
-                const c = chats.push(room)
-                Cookies.set("chats", JSON.stringify(chats))
-                document.location.reload()
-            } else {
-                alert("Kein Room Code gegeben")
-            }
+            let room
+            open("/home/views/add.html")
+
+            const i = setInterval(() => {
+
+                if (localStorage.getItem("room")) {
+                    room = localStorage.getItem("room")
+                    localStorage.removeItem("room")
+                    console.log(chats)
+                    const c = chats.push(room)
+                    Cookies.set("chats", JSON.stringify(chats))
+                    document.location.reload()
+                    clearInterval(i)
+                }
+
+
+            }, 500)
         })
         document.getElementById("changeUsername").addEventListener("click", () => {
             localStorage.setItem("changeUsername", "true")

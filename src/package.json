@@ -4,17 +4,17 @@
   "description": "",
   "main": "devServer.js",
   "scripts": {
-    "test": "cd publicSrc && echo Building JS && webpack --mode development && echo Launching Server && cd .. && start http://localhost:3000/app && node .",
-    "start": "node server.js",
-    "publish": "cd publicSrc && webpack && cd ../.. && npx vercel --prod",
-    "buildDev": "cd publicSrc && echo Building JS && webpack --mode development",
-    "buildProd": "cd publicSrc && echo Building JS && webpack"
+    "test": "cd publicSrc && echo Building JS && npx webpack --mode development && echo Launching Server && cd .. && node .",
+    "start": "node .",
+    "publish": "cd publicSrc && npx webpack && cd ../.. && npx vercel --prod",
+    "buildDev": "cd publicSrc && echo Building JS && npx webpack --mode development",
+    "buildProd": "cd publicSrc && echo Building JS && npx webpack"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
     "ably": "^2.3.1",
-    "express": "^4.19.2"
+    "express": "latest"
   }
 }

@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <!-- Define stylesheet to default look of most pages -->
+    <title>ST-Collab Debug Info</title>
+    <style>
+        body {
+            background-color: black;
+            color: white;
+            font-family: Arial, Helvetica, sans-serif;
+        }
+
+        code {
+            background-color: grey;
+            color: black;
+            padding: 2px;
+            border-radius: 4px;
+        }
+    </style>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+</head>
+
+<body>
+    <h1>Debug Info</h1>
+    <button id="back">Back</button>
+    <button id="clear">Clear Log</button>
+    <button id="download">Download Log</button>
+    <code id="debugInfo">Loading...</code>
+    <br>
+    <noscript>
+        <h1>Please enable javascript to see debug info</h1>
+    </noscript>
+    <script src="debug.js"></script>
+</body>
+<script>
+    document.getElementById("debugInfo").innerHTML = ""
+    for (const i in JSON.parse(localStorage.getItem("logDump"))) {
+        const entry = JSON.parse(localStorage.getItem("logDump"))[i]
+        document.getElementById("debugInfo").innerHTML = document.getElementById("debugInfo").innerHTML + "[" + entry.module + " " + entry.time + "]" + " " + entry.message + "<br>"
+    }
+</script>
+
+</html>

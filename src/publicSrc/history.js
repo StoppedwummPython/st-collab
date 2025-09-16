@@ -1,6 +1,8 @@
 module.exports = async (currentChannel, messages) => {
+    const alog = await require("./logging/alog")()
     const his = await currentChannel.history({ limit: 10000 })
     for (const msg of his.items.reverse()) {
+        alog("History", msg)
         console.log(msg)
         if (msg.name == "chat") {
             const content = new String(msg.data)
