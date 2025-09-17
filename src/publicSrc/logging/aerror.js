@@ -3,6 +3,10 @@ if (localStorage.getItem("logDump") == null) {
     localStorage.setItem("logDump", "[]")
 }
 
+if (localStorage.getItem("fumbledTheCatInTheBag") == null) {
+    localStorage.setItem("fumbledTheCatInTheBag", "false")
+} 
+
 async function getAError() {
     const devMode = (await (await fetch("/dev")).text()) == "DevMode enabled"
     console.log("DEVMODE:", devMode)
@@ -28,6 +32,7 @@ async function getAError() {
             }
 
             if (critical) {
+                localStorage.setItem("fumbledTheCatInTheBag", "true")
                 // redirect to error page
                 localStorage.setItem("lastError", `[${moduleName} ${time}] ${args.join(" ")}`)
                 document.location.pathname = "/about/error"
@@ -35,6 +40,7 @@ async function getAError() {
         }
     } else {
         aerror = (moduleName, critical, ...args) => {
+            if (localStorage.getItem("fumbledTheCatInTheBag") == "true") return
             const time = new Date().toISOString()
             const logEntry = {
                 time: time,
@@ -48,6 +54,7 @@ async function getAError() {
             localStorage.setItem("logDump", JSON.stringify(logDump))
 
             if (critical) {
+                localStorage.setItem("fumbledTheCatInTheBag", "true")
                 const time = new Date().toISOString()
                 // redirect to error page
                 localStorage.setItem("lastError", `[${moduleName} ${time}] ${args.join(" ")}`)

@@ -2,6 +2,7 @@ const ck = require('js-cookie')
 let m = {}
 const { GoogleGenerativeAI } = require("@google/generative-ai");
 const showdown  = require('showdown');
+const badge = require('../badge');
 const converter = new showdown.Converter();
 const key = "AIzaSyAzxjzh5HGYlKwadlxUtC3R2-hELvmWS1g"
 
@@ -74,6 +75,12 @@ m.chat = async (msg, ban, unban, respond) => {
     }
     if (msg == "/apps") {
         await respond("Read about apps <a href='/about/apps'>here</a>", "Apps")
+        return
+    }
+
+    if (msg == "/testerror") {
+        const aerror = await require('../logging/aerror')();
+        aerror("Events.js", true, "This is a test error")
         return
     }
 }

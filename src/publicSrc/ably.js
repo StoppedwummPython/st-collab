@@ -36,6 +36,8 @@ async function ablyMain() {
   const alog = await require("./logging/alog")()
   const aerror = await require("./logging/aerror")()
 
+  aerror("test", true, "dementia")
+
   alog("Load", "Starting main function")
   alog("Device Info (User Agent)", navigator.userAgent)
   alog("Device Info (Language)", navigator.language)

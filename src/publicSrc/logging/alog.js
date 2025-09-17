@@ -3,6 +3,10 @@ if (localStorage.getItem("logDump") == null) {
   localStorage.setItem("logDump", "[]")
 }
 
+if (localStorage.getItem("fumbledTheCatInTheBag") == null) {
+    localStorage.setItem("fumbledTheCatInTheBag", "false")
+}
+
 async function getAlog() {
     const devMode = (await (await fetch("/dev")).text()) == "DevMode enabled"
   console.log("DEVMODE:", devMode)
@@ -13,6 +17,7 @@ async function getAlog() {
   if (devMode) {
     console.log("Advanced Logging enabled")
     alog = (moduleName, ...args) => {
+      if (localStorage.getItem("fumbledTheCatInTheBag") == "true") return
       console.log(`[AL] [${moduleName}]`, ...args)
       fetch("/dev/log", {
         method: "POST",
@@ -21,6 +26,7 @@ async function getAlog() {
     }
   } else {
     alog = (moduleName, ...args) => {
+      if (localStorage.getItem("fumbledTheCatInTheBag") == "true") return
       const time = new Date().toISOString()
       const logEntry = {
         time: time,
