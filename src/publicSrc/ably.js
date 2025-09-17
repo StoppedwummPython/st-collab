@@ -70,7 +70,7 @@ async function ablyMain() {
   const converter = new showdown.Converter({
     openLinksInNewWindow: true
   });
-  aerror("test", true, "dementia")
+  //aerror("test", true, "dementia")
   const { injectSpeedInsights } = require('@vercel/speed-insights')
   const $ = require("jquery")
   alog("Speed Insights", "Initializing")
