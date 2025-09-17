@@ -79,7 +79,7 @@ async function ablyMain() {
     document.location.href = "/app/"
   }
   const sysM = [
-    "Eine native Windows App ist nun verfügbar. Klicke <a href='https://drive.google.com/file/d/1VL-dlHUPc1oMNSTZ5LBxgoxufSI3p57s/view?usp=sharing'>hier</a> um sie herunterzuladen.",
+    "die native windows app ist tot. wer hätte das gedacht :D",
     "btw opensource <a href='https://github.com/StoppedwummPython/st-collab'>github</a>", 
     "Another project (eaglergrab): <a href='https://github.com/Stoppedwumm-Studios/eaglerGrab/releases/tag/v1.2.3'>here</a>", "Read about apps <a href='/about/apps'>here</a>", 
     "If you encounter any errors, please report them with the debug log, which you can find <a href='/about/debug/'>here</a>",

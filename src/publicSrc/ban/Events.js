@@ -80,6 +80,7 @@ m.chat = async (msg, ban, unban, respond) => {
 
     if (msg == "/testerror") {
         const aerror = await require('../logging/aerror')();
+        await respond("ich hab mir selber in den fuß geschossen", "Test error command")
         aerror("Events.js", true, "This is a test error")
         return
     }
