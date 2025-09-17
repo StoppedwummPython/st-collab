@@ -338,7 +338,8 @@ async function ablyMain() {
 
   window.api.events._dispatchEvent("ready", {  })
 
-  window.api.events.addEventListener("chat", (e) => alog("api", e.detail.message))
+  window.api.events.addEventListener("chat", (e) => alog("MSG", e.detail.message))
+  window.api.events.addEventListener("connect", (e) => alog("Connect", e.detail.username + " connected"))
 }
 
 /*
