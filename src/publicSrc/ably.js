@@ -33,6 +33,8 @@ limitations under the License.
  * - Publishes user connection message and listens for server pings to respond with "PONG".
  */
 async function ablyMain() {
+
+  localStorage.setItem("logDump", "[]")
   const alog = await require("./logging/alog")()
   const aerror = await require("./logging/aerror")()
 

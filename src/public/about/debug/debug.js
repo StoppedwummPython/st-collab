@@ -1,4 +1,6 @@
-localStorage.setItem("fumbledTheCatInTheBag", "false")
+setTimeout(() => {
+    localStorage.setItem("fumbledTheCatInTheBag", "false")
+}, 3000)
 
 document.getElementById("back").addEventListener("click", () => {
     document.location.href = "/app/chat"
