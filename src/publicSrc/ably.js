@@ -38,6 +38,26 @@ async function ablyMain() {
   const alog = await require("./logging/alog")()
   const aerror = await require("./logging/aerror")()
 
+  window.api = {}
+
+  window.api.alog = alog
+  window.api.aerror = aerror
+
+  const eventBus = new EventTarget();
+  window.api.events = {
+    addEventListener: (eventName, callback) => {
+      eventBus.addEventListener(eventName, callback);
+    },
+    removeEventListener: (eventName, callback) => {
+      eventBus.removeEventListener(eventName, callback);
+    },
+    // This is an internal method for your app to dispatch events
+    _dispatchEvent: (eventName, detail) => {
+      const event = new CustomEvent(eventName, { detail });
+      eventBus.dispatchEvent(event);
+    }
+  };
+
   alog("Load", "Starting main function")
   alog("Device Info (User Agent)", navigator.userAgent)
   alog("Device Info (Language)", navigator.language)
@@ -166,6 +186,7 @@ async function ablyMain() {
     item.innerHTML = converter.makeHtml(content).replace("<p>", "").replace("</p>", "");
     messages.appendChild(item);
     window.scrollTo(0, document.body.scrollHeight);
+    window.api.events._dispatchEvent("chat", { message: content })
   })
 
   await currentChannel.subscribe("connect", async (msg) => {
@@ -175,6 +196,7 @@ async function ablyMain() {
     item.innerHTML = content + " joined!";
     messages.appendChild(item);
     window.scrollTo(0, document.body.scrollHeight);
+    window.api.events._dispatchEvent("connect", { username: content })
   })
 
   await currentChannel.subscribe("disconnect", async (msg) => {
@@ -183,6 +205,7 @@ async function ablyMain() {
     item.innerHTML = content + " left!";
     messages.appendChild(item);
     window.scrollTo(0, document.body.scrollHeight);
+    window.api.events._dispatchEvent("disconnect", { username: content })
   })
 
   await currentChannel.subscribe("chat_image", (msg) => {
@@ -193,6 +216,7 @@ async function ablyMain() {
     item.innerHTML = "<p>" + content[0] + ": </p>" + "<img src='" + content[1] + "'>"
     messages.appendChild(item);
     window.scrollTo(0, document.body.scrollHeight);
+    window.api.events._dispatchEvent("image", { message: content})
   })
 
   await currentChannel.subscribe("ban", async (username) => {
@@ -212,10 +236,12 @@ async function ablyMain() {
 
   await currentChannel.subscribe("ping", (msg) => {
     currentChannel.publish("chat", localStorage.getItem("username") + ": PONG")
+    window.api.events._dispatchEvent("pong", { message: "PONG" })
   })
 
   await currentChannel.subscribe("forceRefresh", (msg) => {
     location.reload()
+    window.api.events._dispatchEvent("forceRefresh", {  })
   })
 
   alog("Ably", "Publishing connect")
@@ -227,6 +253,7 @@ async function ablyMain() {
 
   form.addEventListener('submit', async function (e) {
     e.preventDefault();
+    api.events._dispatchEvent("message", { message: input.value })
     ext.onChat(input.value, async (username) => {
       await currentChannel.publish("ban", username)
       return username
@@ -281,6 +308,7 @@ async function ablyMain() {
   document.getElementById("image_upload").addEventListener("click", async () => {
     try {
       const image = await upload()
+      window.api.events._dispatchEvent("upload", { image: image })
       await currentChannel.publish("chat_image", JSON.stringify([localStorage.getItem("username"), image]))
     } catch (e) {
       console.log(e)
@@ -304,9 +332,11 @@ async function ablyMain() {
   if (localStorage.getItem("username").length > 20) {
     aerror("Load", true, "Username too long")
   }
-  
+
   alog("Load", "All checks passed, you're good to go!")
   alog("Main App", "Ready")
+
+  window.api.events._dispatchEvent("ready", {  })
 }
 
 /*
