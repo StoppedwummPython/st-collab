@@ -49,16 +49,16 @@
             return item
         }
 
-        if (Cookies.get("chats") == undefined) {
-            Cookies.set("chats", "[]", { expires: 365 })
+        if (window.Cookies.get("chats") == undefined) {
+            window.Cookies.set("chats", "[]", { expires: 365 })
         }
 
-        let chats = JSON.parse(Cookies.get("chats"))
+        let chats = JSON.parse(window.Cookies.get("chats"))
         if (chats.length == 0) {
             localStorage.removeItem("joinCode")
             localStorage.setItem("refresh", "true")
         }
-        console.log(Cookies.get("chats"), Cookies)
+        console.log(window.Cookies.get("chats"), window.Cookies)
 
         let buttons = []
         const firstButton = CreateButton("12345")
@@ -104,7 +104,7 @@
                     localStorage.removeItem("room")
                     console.log(chats)
                     const c = chats.push(room)
-                    Cookies.set("chats", JSON.stringify(chats))
+                    window.Cookies.set("chats", JSON.stringify(chats))
                     document.location.reload()
                     clearInterval(i)
                 }
