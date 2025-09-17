@@ -5,7 +5,7 @@ if (localStorage.getItem("logDump") == null) {
 
 if (localStorage.getItem("fumbledTheCatInTheBag") == null) {
     localStorage.setItem("fumbledTheCatInTheBag", "false")
-} 
+}
 
 async function getAError() {
     const devMode = (await (await fetch("/dev")).text()) == "DevMode enabled"

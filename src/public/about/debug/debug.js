@@ -1,3 +1,5 @@
+localStorage.setItem("fumbledTheCatInTheBag", "false")
+
 document.getElementById("back").addEventListener("click", () => {
     document.location.href = "/app/chat"
 })
