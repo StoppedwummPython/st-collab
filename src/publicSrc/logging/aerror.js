@@ -32,6 +32,7 @@ async function getAError() {
             }
 
             if (critical) {
+                console.log("Critical error, redirecting to error page")
                 localStorage.setItem("fumbledTheCatInTheBag", "true")
                 // redirect to error page
                 localStorage.setItem("lastError", `[${moduleName} ${time}] ${args.join(" ")}`)
@@ -54,6 +55,7 @@ async function getAError() {
             localStorage.setItem("logDump", JSON.stringify(logDump))
 
             if (critical) {
+                console.log("Critical error, redirecting to error page")
                 localStorage.setItem("fumbledTheCatInTheBag", "true")
                 const time = new Date().toISOString()
                 // redirect to error page
