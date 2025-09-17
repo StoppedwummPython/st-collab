@@ -65,7 +65,6 @@ async function ablyMain() {
   const em = require("node-emoji")
   const login = require("./login")
   const showdown = require('showdown');
-  aerror("Test Error", true, "If this is in production, something is very wrong (or just demenetia from my side)")
   const converter = new showdown.Converter({
     openLinksInNewWindow: true
   });
@@ -88,7 +87,7 @@ async function ablyMain() {
   }
   alog("Name", "Only spaces:", isOnlySpace)
   if (isOnlySpace) {
-    alog("Name", "Redirecting")
+    aerror("Name", false, "Name is only spaces, redirecting to /app")
     alert("Your name is only consisting out of spaces")
     document.location.href = "/app"
   }

@@ -13,6 +13,7 @@ async function getAError() {
     if (devMode) {
         console.log("Advanced Error enabled")
         aerror = (moduleName, critical, ...args) => {
+            const time = new Date().toISOString()
             console.error(`[AE] [${moduleName}]`, ...args)
             if (critical) {
                 fetch("/dev/error/critical", {
@@ -29,7 +30,7 @@ async function getAError() {
             if (critical) {
                 // redirect to error page
                 localStorage.setItem("lastError", `[${moduleName} ${time}] ${args.join(" ")}`)
-                document.location.href = "/about/error"
+                document.location.pathname = "/about/error"
             }
         }
     } else {

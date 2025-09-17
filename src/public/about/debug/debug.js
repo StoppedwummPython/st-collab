@@ -29,3 +29,7 @@ for (const i in JSON.parse(localStorage.getItem("logDump"))) {
     const entry = JSON.parse(localStorage.getItem("logDump"))[i]
     document.getElementById("debugInfo").innerHTML = document.getElementById("debugInfo").innerHTML + "[" + entry.module + " " + entry.time + "]" + " " + entry.message + "<br>"
 }
+
+if (document.getElementById("lastError")) {
+    document.getElementById("lastError").innerText = localStorage.getItem("lastError") || "No error details found."
+}
