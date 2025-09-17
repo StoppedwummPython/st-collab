@@ -78,7 +78,13 @@ async function ablyMain() {
   if (localStorage.getItem("joinCode") == undefined || localStorage.getItem("username") == undefined) {
     document.location.href = "/app/"
   }
-  const sysM = ["Eine native Windows App ist nun verfügbar. Klicke <a href='https://drive.google.com/file/d/1VL-dlHUPc1oMNSTZ5LBxgoxufSI3p57s/view?usp=sharing'>hier</a> um sie herunterzuladen.", "btw opensource <a href='https://github.com/StoppedwummPython/st-collab'>github</a>", "Another project (eaglergrab): <a href='https://github.com/Stoppedwumm-Studios/eaglerGrab/releases/tag/v1.2.3'>here</a>", "Read about apps <a href='/about/apps'>here</a>", "If you encounter any errors, please report them with the debug log, which you can find <a href='/about/debug/'>here</a>"]
+  const sysM = [
+    "Eine native Windows App ist nun verfügbar. Klicke <a href='https://drive.google.com/file/d/1VL-dlHUPc1oMNSTZ5LBxgoxufSI3p57s/view?usp=sharing'>hier</a> um sie herunterzuladen.",
+    "btw opensource <a href='https://github.com/StoppedwummPython/st-collab'>github</a>", 
+    "Another project (eaglergrab): <a href='https://github.com/Stoppedwumm-Studios/eaglerGrab/releases/tag/v1.2.3'>here</a>", "Read about apps <a href='/about/apps'>here</a>", 
+    "If you encounter any errors, please report them with the debug log, which you can find <a href='/about/debug/'>here</a>",
+    "For developers: <a href='/about/api/'>The new official API</a>"
+  ]
   const Ably = require('ably');
   const upload = require("./upload")
   const badge = require("./badge")
@@ -216,7 +222,7 @@ async function ablyMain() {
     item.innerHTML = "<p>" + content[0] + ": </p>" + "<img src='" + content[1] + "'>"
     messages.appendChild(item);
     window.scrollTo(0, document.body.scrollHeight);
-    window.api.events._dispatchEvent("image", { message: content})
+    window.api.events._dispatchEvent("image", { message: content })
   })
 
   await currentChannel.subscribe("ban", async (username) => {
@@ -241,7 +247,7 @@ async function ablyMain() {
 
   await currentChannel.subscribe("forceRefresh", (msg) => {
     location.reload()
-    window.api.events._dispatchEvent("forceRefresh", {  })
+    window.api.events._dispatchEvent("forceRefresh", {})
   })
 
   alog("Ably", "Publishing connect")
@@ -336,7 +342,7 @@ async function ablyMain() {
   alog("Load", "All checks passed, you're good to go!")
   alog("Main App", "Ready")
 
-  window.api.events._dispatchEvent("ready", {  })
+  window.api.events._dispatchEvent("ready", {})
 
   window.api.events.addEventListener("chat", (e) => alog("MSG", e.detail.message))
   window.api.events.addEventListener("connect", (e) => alog("Connect", e.detail.username + " connected"))
