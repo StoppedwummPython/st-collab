@@ -337,6 +337,8 @@ async function ablyMain() {
   alog("Main App", "Ready")
 
   window.api.events._dispatchEvent("ready", {  })
+
+  window.api.events.addEventListener("chat", (e) => alog("api", e.detail.message))
 }
 
 /*
