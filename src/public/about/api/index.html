@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interactive st-collab Documentation</title>
+    <style>
+        :root {
+            --bg-color: #fff;
+            --text-color: #333;
+            --header-color: #005a9c;
+            --border-color: #ddd;
+            --code-bg: #f4f4f4;
+            --pre-bg: #f4f4f4;
+            --pre-border: #ccc;
+            --link-color: #005a9c;
+            --button-bg: #005a9c;
+            --button-text: #fff;
+            --button-hover-bg: #004170;
+            --input-border: #ccc;
+            --input-bg: #fff;
+        }
+
+        body.dark-mode {
+            --bg-color: #121212;
+            --text-color: #e0e0e0;
+            --header-color: #64b5f6;
+            --border-color: #444;
+            --code-bg: #2a2a2a;
+            --pre-bg: #1e1e1e;
+            --pre-border: #555;
+            --link-color: #64b5f6;
+            --button-bg: #64b5f6;
+            --button-text: #121212;
+            --button-hover-bg: #82c5f7;
+            --input-border: #555;
+            --input-bg: #2a2a2a;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            line-height: 1.6;
+            color: var(--text-color);
+            background-color: var(--bg-color);
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        .container {
+            max-width: 960px;
+            margin: 0 auto;
+            padding: 1rem;
+        }
+        
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid var(--border-color);
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+        }
+        
+        .header h1 {
+            margin: 0;
+            color: var(--header-color);
+        }
+        
+        .controls {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+        
+        #search-box {
+            padding: 0.5rem;
+            border-radius: 4px;
+            border: 1px solid var(--input-border);
+            background-color: var(--input-bg);
+            color: var(--text-color);
+            min-width: 250px;
+        }
+        
+        .theme-switch-wrapper {
+            display: flex;
+            align-items: center;
+        }
+        .theme-switch {
+            display: inline-block;
+            height: 24px;
+            position: relative;
+            width: 50px;
+        }
+        .theme-switch input {
+            display:none;
+        }
+        .slider {
+            background-color: #ccc;
+            bottom: 0;
+            cursor: pointer;
+            left: 0;
+            position: absolute;
+            right: 0;
+            top: 0;
+            transition: .4s;
+            border-radius: 24px;
+        }
+        .slider:before {
+            background-color: #fff;
+            bottom: 4px;
+            content: "";
+            height: 16px;
+            left: 4px;
+            position: absolute;
+            transition: .4s;
+            width: 16px;
+            border-radius: 50%;
+        }
+        input:checked + .slider {
+            background-color: var(--header-color);
+        }
+        input:checked + .slider:before {
+            transform: translateX(26px);
+        }
+
+        h2, h3 {
+            color: var(--header-color);
+        }
+        
+        h2 {
+            cursor: pointer;
+            position: relative;
+            padding-right: 25px;
+        }
+
+        h2::after {
+            content: '▼';
+            position: absolute;
+            right: 0;
+            font-size: 0.8em;
+            transition: transform 0.2s ease-in-out;
+        }
+        
+        h2.collapsed::after {
+            transform: rotate(-90deg);
+        }
+        
+        .collapsible-content {
+            max-height: 2000px; /* Increased max-height for larger content */
+            overflow: hidden;
+            transition: max-height 0.4s ease-in-out;
+        }
+
+        .collapsible-content.collapsed {
+            max-height: 0;
+        }
+
+        code {
+            background-color: var(--code-bg);
+            padding: 2px 6px;
+            border-radius: 4px;
+        }
+
+        pre {
+            background-color: var(--pre-bg);
+            padding: 1rem;
+            border: 1px solid var(--pre-border);
+            border-radius: 4px;
+            overflow-x: auto;
+            position: relative;
+        }
+        
+        .copy-button {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background-color: var(--button-bg);
+            color: var(--button-text);
+            border: none;
+            padding: 5px 10px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 0.8em;
+            transition: background-color 0.2s;
+        }
+        
+        .copy-button:hover {
+            background-color: var(--button-hover-bg);
+        }
+
+        .docs-section {
+            margin-bottom: 2rem;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 1rem;
+        }
+        
+        .hidden {
+            display: none;
+        }
+
+        a {
+            color: var(--link-color);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>ST-Collab Docs</h1>
+            <div class="controls">
+                <input type="text" id="search-box" placeholder="Search documentation...">
+                <div class="theme-switch-wrapper">
+                    <label class="theme-switch" for="checkbox">
+                        <input type="checkbox" id="checkbox" />
+                        <div class="slider round"></div>
+                    </label>
+                </div>
+            </div>
+        </div>
+
+        <p>The <code>window.api</code> object provides a programmatic interface to interact with the chat application's core functionalities. It allows for logging, error handling, and subscribing to various real-time events within the chat.</p>
+
+        <div id="real-world-examples-section" class="docs-section">
+            <h2 class="collapsible-header">Real-world Examples</h2>
+            <div class="collapsible-content">
+                <p>These examples are taken directly from the application's source code to demonstrate practical usage of the <code>window.api</code>.</p>
+                
+                <h3>Logging Application Readiness</h3>
+                <p>Once all checks have passed and the application is ready, <code>alog</code> is used to log this state, and the <code>ready</code> event is dispatched.</p>
+                <pre><code class="language-javascript">alog("Main App", "Ready");
+window.api.events._dispatchEvent("ready", {});
+</code><button class="copy-button">Copy</button></pre>
+
+                <h3>Listening to Events for Debugging</h3>
+                <p>The application listens to its own <code>chat</code> and <code>connect</code> events to log them for debugging purposes, showcasing how to use <code>addEventListener</code>.</p>
+                <pre><code class="language-javascript">window.api.events.addEventListener("chat", (e) => alog("MSG", e.detail.message));
+window.api.events.addEventListener("connect", (e) => alog("Connect", e.detail.username + " connected"));
+</code><button class="copy-button">Copy</button></pre>
+
+                <h3>Dispatching Events on User Actions</h3>
+                <p>When a user sends a message or uploads an image, the corresponding events are dispatched to notify any listeners.</p>
+                <pre><code class="language-javascript">// When a user submits the chat form
+api.events._dispatchEvent("message", { message: input.value });
+
+// When a user successfully uploads an image
+window.api.events._dispatchEvent("upload", { image: image });
+</code><button class="copy-button">Copy</button></pre>
+
+                <h3>Critical Error Reporting</h3>
+                <p>Before the main logic runs, the application performs checks. If a check fails, <code>aerror</code> is called with <code>true</code> to indicate it's a breaking issue.</p>
+                <pre><code class="language-javascript">if (localStorage.getItem("username").length > 20) {
+    aerror("Load", true, "Username too long");
+}
+</code><button class="copy-button">Copy</button></pre>
+            </div>
+        </div>
+
+        <div id="alog-section" class="docs-section">
+            <h2 class="collapsible-header">alog(area, message)</h2>
+            <div class="collapsible-content">
+                <p>The <code>alog</code> function is used for logging messages to the console and storing them in local storage. This is useful for debugging and tracking the application's state.</p>
+                <h3>Parameters:</h3>
+                <ul>
+                    <li><strong>area (String):</strong> The area of the application the log message is coming from (e.g., "Load", "Ably").</li>
+                    <li><strong>message (String):</strong> The log message.</li>
+                </ul>
+                <h3>Example:</h3>
+                <pre><code class="language-javascript">window.api.alog("MyComponent", "Component has been successfully initialized.");</code><button class="copy-button">Copy</button></pre>
+            </div>
+        </div>
+        
+        <div id="aerror-section" class="docs-section">
+            <h2 class="collapsible-header">aerror(area, isBreaking, message)</h2>
+            <div class="collapsible-content">
+                <p>The <code>aerror</code> function is used for logging errors. It can differentiate between breaking and non-breaking errors.</p>
+                <h3>Parameters:</h3>
+                <ul>
+                    <li><strong>area (String):</strong> The area of the application where the error occurred.</li>
+                    <li><strong>isBreaking (Boolean):</strong> A boolean indicating if the error is critical and breaks the application flow.</li>
+                    <li><strong>message (String):</strong> The error message.</li>
+                </ul>
+                <h3>Example:</h3>
+                <pre><code class="language-javascript">if (typeof someVar === "undefined") {
+    window.api.aerror("DataProcessing", true, "Critical variable 'someVar' is undefined.");
+}</code><button class="copy-button">Copy</button></pre>
+            </div>
+        </div>
+        
+        <div id="events-section" class="docs-section">
+            <h2 class="collapsible-header">events</h2>
+            <div class="collapsible-content">
+                <p>The <code>events</code> object is an event bus that allows you to add and remove event listeners for various chat-related events.</p>
+                
+                <div class="method">
+                    <h3>addEventListener(eventName, callback)</h3>
+                    <p>Subscribes to an event.</p>
+                    <h4>Parameters:</h4>
+                    <ul>
+                        <li><strong>eventName (String):</strong> The name of the event to listen for.</li>
+                        <li><strong>callback (Function):</strong> The function to be executed when the event is dispatched. The function will receive an event object with a `detail` property containing the event data.</li>
+                    </ul>
+                    <h4>Example:</h4>
+                    <pre><code class="language-javascript">window.api.events.addEventListener("chat", (event) => {
+    console.log("New chat message:", event.detail.message);
+});</code><button class="copy-button">Copy</button></pre>
+                </div>
+
+                <div class="method">
+                    <h3>removeEventListener(eventName, callback)</h3>
+                    <p>Unsubscribes from an event.</p>
+                    <h4>Parameters:</h4>
+                    <ul>
+                        <li><strong>eventName (String):</strong> The name of the event to stop listening for.</li>
+                        <li><strong>callback (Function):</strong> The callback function that was originally added.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div id="dispatched-events-section" class="docs-section">
+            <h2 class="collapsible-header">Dispatched Events</h2>
+            <div class="collapsible-content">
+                <p>The following is a list of events that are dispatched by the application.</p>
+                <div class="event"><h3>chat</h3><p>Dispatched when a new chat message is received. Detail: <code>{ message: String }</code></p></div>
+                <div class="event"><h3>connect</h3><p>Dispatched when a user joins the chat. Detail: <code>{ username: String }</code></p></div>
+                <div class="event"><h3>disconnect</h3><p>Dispatched when a user leaves the chat. Detail: <code>{ username: String }</code></p></div>
+                <div class="event"><h3>image</h3><p>Dispatched when an image is received. Detail: <code>{ message: Array }</code> (username, image URL)</p></div>
+                <div class="event"><h3>pong</h3><p>Dispatched in response to a server "ping". Detail: <code>{ message: "PONG" }</code></p></div>
+                <div class="event"><h3>forceRefresh</h3><p>Dispatched to force a page refresh. No detail object.</p></div>
+                <div class="event"><h3>message</h3><p>Dispatched when the local user sends a message. Detail: <code>{ message: String }</code></p></div>
+                <div class="event"><h3>upload</h3><p>Dispatched when the local user uploads an image. Detail: <code>{ image: String }</code> (image URL)</p></div>
+                <div class="event"><h3>ready</h3><p>Dispatched when the application is fully loaded. No detail object.</p></div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+
+            // --- Theme Switcher ---
+            const themeSwitch = document.getElementById('checkbox');
+            const currentTheme = localStorage.getItem('theme');
+
+            if (currentTheme === 'dark') {
+                document.body.classList.add('dark-mode');
+                themeSwitch.checked = true;
+            }
+
+            themeSwitch.addEventListener('change', function(event) {
+                if (event.target.checked) {
+                    document.body.classList.add('dark-mode');
+                    localStorage.setItem('theme', 'dark');
+                } else {
+                    document.body.classList.remove('dark-mode');
+                    localStorage.setItem('theme', 'light');
+                }
+            });
+
+            // --- Search Functionality ---
+            const searchBox = document.getElementById('search-box');
+            const sections = document.querySelectorAll('.docs-section');
+
+            searchBox.addEventListener('keyup', (e) => {
+                const searchTerm = e.target.value.toLowerCase();
+
+                sections.forEach(section => {
+                    const sectionText = section.textContent.toLowerCase();
+                    if (sectionText.includes(searchTerm)) {
+                        section.classList.remove('hidden');
+                    } else {
+                        section.classList.add('hidden');
+                    }
+                });
+            });
+
+            // --- Collapsible Sections ---
+            const headers = document.querySelectorAll('.collapsible-header');
+
+            headers.forEach(header => {
+                header.addEventListener('click', () => {
+                    header.classList.toggle('collapsed');
+                    const content = header.nextElementSibling;
+                    content.classList.toggle('collapsed');
+                });
+            });
+
+            // --- Copy to Clipboard ---
+            const copyButtons = document.querySelectorAll('.copy-button');
+
+            copyButtons.forEach(button => {
+                button.addEventListener('click', () => {
+                    const pre = button.parentElement;
+                    const code = pre.querySelector('code');
+                    const text = code.innerText;
+
+                    navigator.clipboard.writeText(text).then(() => {
+                        button.innerText = 'Copied!';
+                        setTimeout(() => {
+                            button.innerText = 'Copy';
+                        }, 2000);
+                    }).catch(err => {
+                        console.error('Failed to copy text: ', err);
+                    });
+                });
+            });
+
+        });
+    </script>
+</body>
+</html>
