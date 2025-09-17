@@ -293,6 +293,21 @@ async function ablyMain() {
   if (typeof localStorage.getItem("joinCode") != "string" || typeof localStorage.getItem("username") != "string") {
     aerror("Load", true, "Variables not their expected type")
   }
+
+  if (typeof isOnlySpace != "boolean" || isOnlySpace == undefined || isOnlySpace == null) {
+    aerror("Load", true, "isOnlySpace is not a boolean")
+  }
+
+  if (localStorage.getItem("joinCode").length > 20) {
+    aerror("Load", true, "Join code too long")
+  }
+
+  if (localStorage.getItem("username").length > 20) {
+    aerror("Load", true, "Username too long")
+  }
+  
+  alog("Load", "All checks passed, you're good to go!")
+  alog("Main App", "Ready")
 }
 
 /*
