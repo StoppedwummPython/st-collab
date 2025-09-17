@@ -70,6 +70,14 @@
             localStorage.setItem("joinCode", "12345")
             localStorage.setItem("refresh", "true")
         })
+
+        const oldDesignButton = CreateButton("Old Design")
+        oldDesignButton.addEventListener("click", () => {
+            localStorage.setItem("oldDesign", "true");
+            localStorage.setItem("refreshMain", "true")
+            document.location.pathname = "/app/";
+        });
+
         for (const element of chats) {
             const button = CreateButton(element)
             buttons.push(button)
