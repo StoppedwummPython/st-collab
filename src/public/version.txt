@@ -1,0 +1,16 @@
+3.1.0!
+<h1>3.1.0 - Comeback Update</h1>
+
+<h2>Was ist geplant?</h2>
+<ul>
+    <li>Direct messages (DM's) (In progress)</li>
+    <li>Accounts (In progress)</li>
+</ul>
+
+<h2>Was ist neues?</h2>
+<ul>
+    <li>Debug logs</li>
+    <li>Option für altes Design</li>
+    <li>Error page and error logs</li>
+    <li>Fixing of small bugs/old api keys</li>
+</ul>

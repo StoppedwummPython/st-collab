@@ -18,23 +18,15 @@
 </head>
 <body>
     <h1>Update Log</h1>
-    <h2>Was ist neu!</h2>
-    <ul>
-        <li>S3 statt Base64 ermöglicht größere Bilder</li>
-        <li>Kleine Bugs</li>
-    </ul>
-    <h2>Was ist geplant?</h2>
-    <ul>
-        <li>Direct messages (DM's) (In progress)</li>
-        <li>Accounts (In progress)</li>
-        <li>Opensource (Planned)</li>
-        <li>Neue Icons
-            <ul>
-                <li><a href="/app/chat/golden-icon.png">Gold Icon</a></li>
-                <li><a href="/app/chat/silver-icon.png">Silber Icon</a></li>
-            </ul>
-        </li>
-    </ul>
+    <div id="update"></div>
     <a href="/app">Launch ST-Collab</a>
+    <p style="color: gray; font-size: 10px">Dieses Popup wird nach jedem Update einmal gezeigt</p>
 </body>
+<script>
+    fetch("/version.txt")
+    .then(response => response.text())
+    .then(data => {
+        document.getElementById("update").innerHTML = data.split("!")[1]
+    });
+</script>
 </html>
