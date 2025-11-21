@@ -11,7 +11,7 @@
   "license": "ISC",
   "dependencies": {
     "@google/generative-ai": "^0.24.1",
-    "@uploadcare/rest-client": "^6.14.2",
+    "@uploadcare/rest-client": "^6.18.2",
     "@uploadcare/upload-client": "^6.14.2",
     "@vercel/speed-insights": "^1.2.0",
     "ably": "^2.7.0",
