@@ -22,18 +22,39 @@ document.getElementById("download").addEventListener("click", () => {
 
 document.getElementById("clear").addEventListener("click", () => {
     if (confirm("Are you sure you want to clear the debug log? This action cannot be undone.")) {
-        localStorage.setItem("debugLog", ""); // Clear the log
+        // CHANGED: Use "logDump" to match the rest of the script
+        localStorage.removeItem("logDump"); 
+        localStorage.removeItem("lastError");
         alert("Debug log cleared.")
-        document.getElementById("debugInfo").innerHTML = "Debug log cleared."
+        location.reload(); // Refresh page to show empty state
     }
 })
 
-document.getElementById("debugInfo").innerHTML = ""
-for (const i in JSON.parse(localStorage.getItem("logDump"))) {
-    const entry = JSON.parse(localStorage.getItem("logDump"))[i]
-    document.getElementById("debugInfo").innerHTML = document.getElementById("debugInfo").innerHTML + "[" + entry.module + " " + entry.time + "]" + " " + entry.message + "<br>"
+// --- FIX FOR THE LOADING ISSUE ---
+const debugContainer = document.getElementById("debugInfo");
+const rawLogs = localStorage.getItem("logDump");
+
+if (!rawLogs) {
+    debugContainer.innerHTML = "No log entries found.";
+} else {
+    try {
+        const logs = JSON.parse(rawLogs);
+        let logHTML = "";
+        
+        // Loop through the array/object
+        for (const i in logs) {
+            const entry = logs[i];
+            logHTML += `[${entry.module || 'Unknown'} ${entry.time || ''}] ${entry.message || ''}<br>`;
+        }
+        
+        debugContainer.innerHTML = logHTML || "Log is empty.";
+    } catch (e) {
+        debugContainer.innerHTML = "Error parsing log data.";
+        console.error(e);
+    }
 }
 
+// Populate the error field
 if (document.getElementById("lastError")) {
-    document.getElementById("lastError").innerText = localStorage.getItem("lastError") || "No error details found."
+    document.getElementById("lastError").innerText = localStorage.getItem("lastError") || "No error details found.";
 }
