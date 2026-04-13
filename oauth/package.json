@@ -14,6 +14,6 @@
     "express-openid-connect": "latest"
   },
   "devDependencies": {
-    "vercel": "^50.23.2"
+    "vercel": "^51.1.0"
   }
 }
