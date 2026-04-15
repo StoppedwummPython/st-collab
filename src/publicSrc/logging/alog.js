@@ -15,7 +15,6 @@ async function getAlog() {
     return null
   }
   if (devMode) {
-    console.log("Advanced Logging enabled")
     alog = (moduleName, ...args) => {
       if (localStorage.getItem("fumbledTheCatInTheBag") == "true") return
       console.log(`[AL] [${moduleName}]`, ...args)
