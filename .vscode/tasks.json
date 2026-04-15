@@ -7,8 +7,8 @@
 			"path": "src",
 			"group": "build",
 			"problemMatcher": [],
-			"label": "npm: test - src",
-			"detail": "cd publicSrc && echo Building JS && webpack --mode development && echo Launching Server && cd .. && start http://localhost:3000/app && node ."
+			"label": "Dev Server",
+			"detail": "Build dev bundle and start dev server"
 		},
 		{
 			"type": "npm",
@@ -19,8 +19,8 @@
 				"isDefault": true
 			},
 			"problemMatcher": [],
-			"label": "npm: buildProd - src",
-			"detail": "cd publicSrc && echo Building JS && webpack"
+			"label": "Build Production bundle",
+			"detail": "Builds production bundle"
 		},
 		{
 			"type": "npm",
@@ -28,23 +28,23 @@
 			"path": "src",
 			"group": "build",
 			"problemMatcher": [],
-			"label": "npm: buildDev - src",
-			"detail": "cd publicSrc && echo Building JS && webpack --mode development"
+			"label": "Build dev bundle",
+			"detail": "Builds development bundle"
 		},
 		{
 			"type": "npm",
 			"script": "start",
 			"path": "src",
 			"problemMatcher": [],
-			"label": "npm: start - src",
-			"detail": "node server.js"
+			"label": "Only start Dev Server",
+			"detail": "Starts Dev Server without building"
 		},
 		{
 			"type": "npm",
 			"script": "publish",
 			"path": "src",
 			"problemMatcher": [],
-			"label": "npm: publish - src",
+			"label": "Publish to vercel",
 			"detail": "Publish to vercel"
 		},
 	]
