@@ -1,5 +1,19 @@
 {
     "configurations": [
+        {
+            "name": "Run Dev Server",
+            "request": "launch",
+            "runtimeArgs": [
+                "run-script",
+                "test"
+            ],
+            "runtimeExecutable": "npm",
+            "skipFiles": [
+                "<node_internals>/**"
+            ],
+            "type": "node",
+            "cwd": "${workspaceFolder}/src"
+        }
         
     ]
 }
