@@ -12,7 +12,7 @@
   "dependencies": {
     "@google/generative-ai": "^0.24.1",
     "@uploadcare/rest-client": "^6.18.4",
-    "@uploadcare/upload-client": "^6.18.4",
+    "@uploadcare/upload-client": "^6.21.0",
     "@vercel/speed-insights": "^2.0.0",
     "ably": "^2.28.0",
     "jquery": "^4.0.0",
